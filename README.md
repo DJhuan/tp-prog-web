@@ -24,6 +24,23 @@ O **(Nome do sistema)** é uma plataforma web para gestão de eventos e venda de
 
 ## Instruções para instalação
 
+### Execução com Docker Compose
+
+1. Copie `.env.example` para `.env` e altere `SECRET_KEY` para um valor
+   exclusivo em ambientes não locais.
+2. Construa e inicie a aplicação:
+
+   ```bash
+   docker compose up --build -d
+   ```
+
+3. Acesse <http://localhost:8000/>. As migrações são executadas
+   automaticamente antes do servidor iniciar.
+
+O banco SQLite é persistido no volume Docker `sqlite_data`. Para parar os
+serviços, execute `docker compose down`; para remover também os dados,
+execute `docker compose down -v`.
+
 ## Como executar
 
 ## Principais funcionalidades
