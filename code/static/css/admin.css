@@ -1,0 +1,628 @@
+:root {
+    --eventa-navy: #192f52;
+    --eventa-navy-hover: #29466d;
+    --eventa-blue: #4385e8;
+    --eventa-background: #f4f6fa;
+    --eventa-text: #263449;
+    --eventa-muted: #8491a5;
+    --eventa-border: #e9edf3;
+    --eventa-white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    background: var(--eventa-background);
+    color: var(--eventa-text);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#container {
+    min-width: 0;
+    background: var(--eventa-background);
+}
+
+/* =====================================================
+   SIDEBAR EVENTA
+===================================================== */
+
+.eventa-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 264px;
+    min-width: 264px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    background: var(--eventa-navy);
+    color: white;
+}
+
+.eventa-sidebar-brand {
+    min-height: 100px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    flex-shrink: 0;
+}
+
+.eventa-sidebar-brand strong {
+    display: block;
+    color: white;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.eventa-sidebar-brand small {
+    display: block;
+    color: #b9c8dc;
+    font-size: 11px;
+}
+
+.eventa-brand-icon {
+    width: 46px;
+    height: 46px;
+    flex-shrink: 0;
+    border-radius: 13px;
+    background: #416ba8;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.eventa-menu {
+    flex: 1;
+    padding: 10px 16px;
+    overflow-y: auto;
+}
+
+.menu-label {
+    display: block;
+    margin: 22px 10px 12px;
+    color: #91a8c7;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.menu-link {
+    min-height: 48px;
+    margin-bottom: 6px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    border-radius: 9px;
+    color: #d0dbea !important;
+    text-decoration: none !important;
+    font-size: 13px;
+    transition: .2s;
+}
+
+.menu-link i {
+    font-size: 18px;
+}
+
+.menu-link:hover,
+.menu-link.active {
+    background: var(--eventa-navy-hover);
+    color: white !important;
+}
+
+.menu-link.active {
+    box-shadow: inset 3px 0 #78a9f5;
+}
+
+.eventa-sidebar-footer {
+    padding: 22px 24px;
+    border-top: 1px solid rgba(255,255,255,.12);
+    color: #91a8c7;
+    font-size: 11px;
+    flex-shrink: 0;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+#header {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 78px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 12px 28px 12px 290px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    background: white !important;
+    color: var(--eventa-text) !important;
+    border-bottom: 1px solid var(--eventa-border) !important;
+    box-shadow: 0 2px 8px rgba(23,43,77,.025);
+}
+
+#branding {
+    display: none !important;
+}
+
+#user-tools {
+    float: none !important;
+    margin: 0 0 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 8px;
+    color: var(--eventa-text) !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+
+#user-tools a,
+#header a:link,
+#header a:visited {
+    color: var(--eventa-text) !important;
+    text-decoration: none;
+}
+
+#user-tools a:hover,
+#header a:hover {
+    color: var(--eventa-blue) !important;
+}
+
+#user-tools button {
+    color: var(--eventa-text) !important;
+}
+
+/* Botão de tema */
+
+.theme-toggle {
+    display: flex !important;
+    align-items: center;
+    margin-left: 15px !important;
+    flex-shrink: 0;
+}
+
+.theme-toggle button {
+    width: 42px;
+    height: 42px;
+    border: none !important;
+    border-radius: 50% !important;
+    background: #edf2fa !important;
+    color: var(--eventa-blue) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s;
+}
+
+.theme-toggle button:hover {
+    background: #dce8fa !important;
+    transform: rotate(15deg);
+}
+
+/* =====================================================
+   BREADCRUMBS
+===================================================== */
+
+.breadcrumbs {
+    margin: 0 !important;
+    width: 100% !important;
+    padding: 13px 28px !important;
+    background: white !important;
+    color: var(--eventa-muted) !important;
+    border-bottom: 1px solid var(--eventa-border);
+    font-size: 13px;
+}
+
+.breadcrumbs a {
+    color: var(--eventa-blue) !important;
+}
+
+/* =====================================================
+   ÁREA PRINCIPAL
+===================================================== */
+
+#main {
+    margin-left: 264px !important;
+    width: calc(100% - 264px) !important;
+    min-height: calc(100vh - 78px);
+    background: var(--eventa-background);
+}
+
+#content {
+    width: 100%;
+    padding: 30px !important;
+    background: var(--eventa-background);
+}
+
+#content-main {
+    width: 100%;
+    min-width: 0;
+}
+
+#content h1 {
+    margin-bottom: 22px !important;
+    color: var(--eventa-text) !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+}
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard #content {
+    padding: 30px !important;
+}
+
+.dashboard .module {
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--eventa-border);
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(23,43,77,.04);
+}
+
+.dashboard .module caption {
+    background: var(--eventa-navy);
+    color: white;
+}
+
+.dashboard-heading h1 {
+    margin-bottom: 6px !important;
+    color: var(--eventa-text) !important;
+    font-size: 26px !important;
+    font-weight: 700 !important;
+}
+
+.dashboard-heading p {
+    color: var(--eventa-muted) !important;
+    font-size: 14px !important;
+}
+
+/* =====================================================
+   LISTAGENS
+===================================================== */
+
+#changelist {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    background: transparent !important;
+}
+
+#changelist-form {
+    min-width: 0;
+}
+
+#changelist .changelist-form-container {
+    min-width: 0;
+}
+
+#changelist-search,
+#changelist .actions,
+#changelist .results,
+#changelist-filter {
+    background: white !important;
+    color: var(--eventa-text) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px !important;
+}
+
+#changelist-search {
+    padding: 16px !important;
+    margin-bottom: 18px !important;
+}
+
+#changelist-search input[type="text"] {
+    min-height: 40px;
+    padding: 9px 12px !important;
+    background: white !important;
+    color: var(--eventa-text) !important;
+    border: 1px solid #dce3ed !important;
+    border-radius: 7px !important;
+}
+
+#changelist-search input[type="submit"] {
+    min-height: 40px;
+    padding: 9px 18px !important;
+    background: var(--eventa-blue) !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+}
+
+/* =====================================================
+   TABELAS
+===================================================== */
+
+#changelist .results {
+    overflow-x: auto;
+}
+
+#result_list {
+    width: 100%;
+    border-collapse: collapse;
+    background: white !important;
+}
+
+#result_list thead th {
+    padding: 15px !important;
+    background: #edf2fa !important;
+    color: var(--eventa-navy) !important;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--eventa-border);
+}
+
+#result_list tbody td,
+#result_list tbody th {
+    padding: 15px !important;
+    background: white !important;
+    color: var(--eventa-text) !important;
+    border-bottom: 1px solid var(--eventa-border);
+}
+
+#result_list tbody tr:hover td,
+#result_list tbody tr:hover th {
+    background: #f7f9fc !important;
+}
+
+#result_list a {
+    color: var(--eventa-blue) !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* =====================================================
+   BOTÕES
+===================================================== */
+
+.object-tools {
+    margin-bottom: 18px !important;
+}
+
+.object-tools a,
+.object-tools a.addlink {
+    padding: 11px 18px !important;
+    background: var(--eventa-blue) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    text-decoration: none !important;
+    font-weight: 600;
+}
+
+.object-tools a:hover {
+    background: #316fcf !important;
+}
+
+.button,
+input.default,
+.submit-row input,
+a.button,
+input[type="submit"] {
+    padding: 10px 17px !important;
+    background: var(--eventa-blue) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 7px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.button:hover,
+input.default:hover,
+.submit-row input:hover,
+a.button:hover,
+input[type="submit"]:hover {
+    background: #316fcf !important;
+}
+
+.deletelink {
+    padding: 9px 14px !important;
+    background: #fff0f0 !important;
+    color: #c03939 !important;
+    border-radius: 7px !important;
+}
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+#changelist-filter {
+    padding: 15px !important;
+    margin-left: 18px;
+}
+
+#changelist-filter h2 {
+    padding: 12px !important;
+    background: var(--eventa-navy) !important;
+    color: white !important;
+    border-radius: 7px;
+    font-size: 13px;
+}
+
+#changelist-filter a {
+    color: var(--eventa-muted) !important;
+}
+
+#changelist-filter li.selected a {
+    color: var(--eventa-blue) !important;
+}
+
+/* =====================================================
+   FORMULÁRIOS DE CADASTRO E EDIÇÃO
+===================================================== */
+
+fieldset.module,
+.inline-group {
+    overflow: hidden;
+    margin-bottom: 22px !important;
+    background: white !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px !important;
+}
+
+fieldset.module h2,
+.inline-group h2 {
+    padding: 15px 20px !important;
+    background: #edf2fa !important;
+    color: var(--eventa-navy) !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
+
+.form-row {
+    padding: 16px 20px !important;
+    border-bottom: 1px solid var(--eventa-border);
+}
+
+.aligned label {
+    color: var(--eventa-text) !important;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Campos de formulário */
+
+.form-row input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+.form-row select,
+.form-row textarea,
+.vTextField,
+.vLargeTextField,
+.vDateField,
+.vTimeField,
+.vIntegerField {
+    max-width: 100%;
+    padding: 10px 12px !important;
+    background: white !important;
+    color: var(--eventa-text) !important;
+    border: 1px solid #dce3ed !important;
+    border-radius: 7px !important;
+    box-shadow: none !important;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    border-color: var(--eventa-blue) !important;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(67,133,232,.12) !important;
+}
+
+/* Checkboxes e radios */
+
+.form-row input[type="checkbox"],
+.form-row input[type="radio"] {
+    accent-color: var(--eventa-blue);
+}
+
+/* Ajuda dos campos */
+
+.help,
+.helptext,
+p.help {
+    color: var(--eventa-muted) !important;
+    font-size: 11px !important;
+}
+
+/* Área dos botões do formulário */
+
+.submit-row {
+    padding: 18px 20px !important;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background: white !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px !important;
+}
+
+/* =====================================================
+   MENSAGENS
+===================================================== */
+
+.messagelist li {
+    padding: 13px 16px;
+    margin-bottom: 10px;
+    border-radius: 9px;
+}
+
+/* =====================================================
+   PAGINAÇÃO
+===================================================== */
+
+.paginator {
+    padding: 15px !important;
+    color: var(--eventa-muted);
+}
+
+/* =====================================================
+   RESPONSIVIDADE
+===================================================== */
+
+@media (max-width: 991px) {
+    .eventa-sidebar {
+        width: 240px;
+        min-width: 240px;
+    }
+
+    #header {
+        padding-left: 260px !important;
+    }
+
+    #main {
+        margin-left: 240px !important;
+        width: calc(100% - 240px) !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .eventa-sidebar {
+        display: none;
+    }
+
+    #header {
+        min-height: 65px !important;
+        padding: 14px 18px !important;
+    }
+
+    #user-tools {
+        flex-wrap: wrap;
+        font-size: 10px !important;
+    }
+
+    #main {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    #content {
+        padding: 18px !important;
+    }
+
+    #changelist-filter {
+        margin: 15px 0 0;
+    }
+
+    .eventa-user-info strong {
+        max-width: 160px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
