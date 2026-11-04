@@ -1,8 +1,8 @@
-# (Nome do sistema)
+# EVENTA
 
 ## Índice
 
-- **Nome da aplicação:** (Nome do sistema)
+- **Nome da aplicação:** EVENTA
 - **Integrantes do grupo:**
   - Jhuan Carlos Sabaini Dassie
   - Rafaella Maciel Pereira Leite
@@ -20,7 +20,7 @@
 
 ## Descrição do projeto
 
-O **(Nome do sistema)** é uma plataforma web para gestão de eventos e venda de ingressos. O sistema funciona como ponte tecnológica, um SaaS (Software as a Service) onde vendedores da plataforma comercializam a solução para produtoras de eventos. O sistema gerencia todo o ciclo de vida do evento, desde a sua criação pelos coordenadores da produtora, a configuração e venda de ingressos para os participantes, até a validação das entradas no dia do evento pelos organizadores.
+O **EVENTA** é uma plataforma web para gestão de eventos e venda de ingressos. O sistema funciona como ponte tecnológica, um SaaS (Software as a Service) onde vendedores da plataforma comercializam a solução para produtoras de eventos. O sistema gerencia todo o ciclo de vida do evento, desde a sua criação pelos coordenadores da produtora, a configuração e venda de ingressos para os participantes, até a validação das entradas no dia do evento pelos organizadores.
 
 ## Instruções para instalação
 
