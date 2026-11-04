@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: portal-biblioteca:latest
+    image: eventa-system:latest
     environment:
       SECRET_KEY: ${SECRET_KEY:-change-this-in-production}
       DEBUG: ${DEBUG:-False}
@@ -22,7 +22,7 @@ services:
         - -c
         - >-
           import urllib.request;
-          urllib.request.urlopen('http://127.0.0.1:8000/', timeout=5)
+          urllib.request.urlopen('http://127.0.0.1:8000/admin/login/', timeout=5)
       interval: 30s
       timeout: 5s
       retries: 3
