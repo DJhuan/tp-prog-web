@@ -1,80 +1,69 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+
 from .models import Usuario
 
 
 @admin.register(Usuario)
 class UsuarioAdmin(UserAdmin):
-
-    model = Usuario
+    ordering = ("email",)
 
     list_display = (
-        'email',
-        'first_name',
-        'last_name',
-        'perfil',
-        'produtora',
-        'is_active',
-        'is_staff',
+        "email",
+        "first_name",
+        "last_name",
+        "perfil",
+        "produtora",
+        "is_active",
+        "is_staff",
     )
 
     list_filter = (
-        'perfil',
-        'is_active',
-        'is_staff',
+        "perfil",
+        "is_active",
+        "is_staff",
     )
 
     search_fields = (
-        'email',
-        'first_name',
-        'last_name',
+        "email",
+        "first_name",
+        "last_name",
     )
 
-    ordering = ('email',)
+    readonly_fields = ("last_login", "date_joined")
 
     fieldsets = (
-        ('Informações pessoais', {
-            'fields': (
-                'email',
-                'first_name',
-                'last_name',
-                'password',
+        ("Acesso", {
+            "fields": ("email", "password")
+        }),
+        ("Informações pessoais", {
+            "fields": ("first_name", "last_name")
+        }),
+        ("Perfil do sistema", {
+            "fields": ("perfil", "produtora")
+        }),
+        ("Permissões", {
+            "fields": (
+                "is_active",
+                "is_staff",
+                "is_superuser",
+                "groups",
+                "user_permissions",
             )
         }),
-        ('Perfil e produtora', {
-            'fields': (
-                'perfil',
-                'produtora',
-            )
-        }),
-        ('Permissões', {
-            'fields': (
-                'is_active',
-                'is_staff',
-                'is_superuser',
-                'groups',
-                'user_permissions',
-            )
-        }),
-        ('Datas importantes', {
-            'fields': (
-                'last_login',
-                'date_joined',
-            )
+        ("Datas", {
+            "fields": ("last_login", "date_joined")
         }),
     )
 
     add_fieldsets = (
-        (None, {
-            'classes': ('wide',),
-            'fields': (
-                'email',
-                'first_name',
-                'last_name',
-                'perfil',
-                'produtora',
-                'password1',
-                'password2',
+        ("Novo usuário", {
+            "classes": ("wide",),
+            "fields": (
+                "email",
+                "perfil",
+                "password1",
+                "password2",
             ),
         }),
     )
