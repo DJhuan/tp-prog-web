@@ -2,7 +2,7 @@
 
 ## Índice
 
-- **Nome da aplicação:** (Nome do sistema)
+- **Nome da aplicação:** Eventa
 - **Integrantes do grupo:**
   - Jhuan Carlos Sabaini Dassie
   - Rafaella Maciel Pereira Leite
