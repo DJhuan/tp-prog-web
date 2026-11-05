@@ -1,0 +1,27 @@
+{% extends "admin/login.html" %}
+{% block content %}
+<p class="login-box-msg">Bem-vindo ao EVENTA</p>
+{% if user.is_authenticated %}
+<div class="callout callout-warning">Sua conta não tem acesso a esta página. Entre com uma conta autorizada.</div>
+{% endif %}
+<form method="post" action="{{ app_path }}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next|default:'/admin/' }}">
+    {% if form.errors %}<div class="callout callout-danger" role="alert">{{ form.non_field_errors }}{{ form.username.errors }}{{ form.password.errors }}</div>{% endif %}
+    <div class="form-group">
+        <label for="id_username">E-mail</label>
+        <div class="input-group">
+            <input class="form-control" type="email" id="id_username" name="username" value="{{ form.username.value|default_if_none:'' }}" autocomplete="username" required autofocus>
+            <div class="input-group-append"><span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span></div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="id_password">Senha</label>
+        <div class="input-group">
+            <input class="form-control" type="password" id="id_password" name="password" autocomplete="current-password" required>
+            <div class="input-group-append"><span class="input-group-text"><i class="fas fa-lock" aria-hidden="true"></i></span></div>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+</form>
+{% endblock %}
