@@ -109,3 +109,26 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'contas.Usuario'
+
+JAZZMIN_SETTINGS = {
+    "site_title": "EVENTA",
+    "site_header": "EVENTA",
+    "site_brand": "EVENTA",
+    "welcome_sign": "Bem-vindo ao EVENTA",
+    "copyright": "EVENTA",
+    "use_google_fonts_cdn": False,
+    "custom_css": "css/admin.css",
+    "show_ui_builder": False,
+    "icons": {
+        "contas.Usuario": "fas fa-users",
+        "eventos.Produtora": "fas fa-building",
+        "eventos.Evento": "fas fa-calendar-alt",
+        "eventos.TipoIngresso": "fas fa-ticket-alt",
+        "ingressos.Ingresso": "fas fa-ticket-alt",
+        "ingressos.Pedido": "fas fa-receipt",
+    },
+}
+JAZZMIN_UI_TWEAKS = {
+    "theme": "flatly",
+    "dark_mode_theme": "darkly",
+}
