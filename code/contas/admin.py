@@ -22,6 +22,8 @@ class UsuarioAdmin(UserAdmin):
         "perfil",
         "is_active",
         "is_staff",
+        ("produtora", admin.RelatedOnlyFieldListFilter),
+        "date_joined",
     )
 
     search_fields = (
@@ -31,6 +33,7 @@ class UsuarioAdmin(UserAdmin):
     )
 
     readonly_fields = ("last_login", "date_joined")
+    list_select_related = ("produtora",)
 
     fieldsets = (
         ("Acesso", {
