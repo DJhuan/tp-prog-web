@@ -1,628 +1,127 @@
-:root {
-    --eventa-navy: #192f52;
-    --eventa-navy-hover: #29466d;
-    --eventa-blue: #4385e8;
-    --eventa-background: #f4f6fa;
-    --eventa-text: #263449;
-    --eventa-muted: #8491a5;
-    --eventa-border: #e9edf3;
-    --eventa-white: #ffffff;
+.eventa-theme-control { display: flex; align-items: center; gap: .5rem; padding: .5rem; }
+.eventa-theme-buttons { display: inline-flex; gap: .5rem; padding: .5rem; border: 1px solid #adb5bd; border-radius: .75rem; }
+.eventa-theme-button { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; padding: 0; border: 0; border-radius: .5rem; background: transparent; color: #495057; cursor: pointer; }
+.eventa-theme-button:hover { background: #e9ecef; }
+.eventa-theme-button.active { background: #2c3e50; color: #fff; }
+html[data-theme="dark"] .eventa-theme-button { color: #dee2e6; }
+html[data-theme="dark"] .eventa-theme-button:hover { background: #495057; }
+html[data-theme="dark"] .eventa-theme-button.active { background: #dee2e6; color: #212529; }
+.jazzmin-login-page .eventa-theme-control { justify-content: center; margin-bottom: 1rem; }
+.dashboard-heading p { opacity: .8; }
+.dashboard-icon { font-size: 1.5rem; }
+html[data-theme="dark"] { color-scheme: dark; }
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"] .callout { color: #f8f9fa; }
+
+.jazzmin-login-page .login-box { width: min(360px, calc(100% - 2rem)); }
+.jazzmin-login-page { min-height: 100vh; height: auto; padding: 1rem 0; }
+.eventa-theme-button:focus-visible { outline: 2px solid currentColor; outline-offset: 1px; }
+#jazzy-navbar .nav-item.dropdown:has(> #jazzy-usermenu) {
+    align-self: center;
 }
-
-* {
-    box-sizing: border-box;
-}
-
-html,
-body {
-    min-height: 100%;
-    margin: 0;
-    background: var(--eventa-background);
-    color: var(--eventa-text);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-#container {
-    min-width: 0;
-    background: var(--eventa-background);
-}
-
-/* =====================================================
-   SIDEBAR EVENTA
-===================================================== */
-
-.eventa-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 264px;
-    min-width: 264px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    background: var(--eventa-navy);
-    color: white;
-}
-
-.eventa-sidebar-brand {
-    min-height: 100px;
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    flex-shrink: 0;
-}
-
-.eventa-sidebar-brand strong {
-    display: block;
-    color: white;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
-
-.eventa-sidebar-brand small {
-    display: block;
-    color: #b9c8dc;
-    font-size: 11px;
-}
-
-.eventa-brand-icon {
-    width: 46px;
-    height: 46px;
-    flex-shrink: 0;
-    border-radius: 13px;
-    background: #416ba8;
-    color: white;
+#jazzy-navbar .nav-item.dropdown:has(> #jazzy-usermenu) > .nav-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 23px;
+}
+.jazzmin-login-page .eventa-theme-control {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    margin: 0;
+    z-index: 1030;
 }
 
-.eventa-menu {
-    flex: 1;
-    padding: 10px 16px;
-    overflow-y: auto;
+/* Menu EVENTA: azul-marinho em ambos os temas, como na referência. */
+#jazzy-sidebar {
+    background: #192d4b;
+    box-shadow: none !important;
+    border-right: 1px solid #30435e;
 }
-
-.menu-label {
-    display: block;
-    margin: 22px 10px 12px;
-    color: #91a8c7;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-
-.menu-link {
-    min-height: 48px;
-    margin-bottom: 6px;
-    padding: 0 14px;
+#jazzy-sidebar #jazzy-logo {
     display: flex;
     align-items: center;
-    gap: 13px;
-    border-radius: 9px;
-    color: #d0dbea !important;
-    text-decoration: none !important;
-    font-size: 13px;
-    transition: .2s;
+    gap: .75rem;
+    min-height: 88px;
+    padding: 1.5rem;
+    border-bottom: 0;
+    color: #c1cede;
+    background: transparent;
 }
-
-.menu-link i {
-    font-size: 18px;
-}
-
-.menu-link:hover,
-.menu-link.active {
-    background: var(--eventa-navy-hover);
-    color: white !important;
-}
-
-.menu-link.active {
-    box-shadow: inset 3px 0 #78a9f5;
-}
-
-.eventa-sidebar-footer {
-    padding: 22px 24px;
-    border-top: 1px solid rgba(255,255,255,.12);
-    color: #91a8c7;
-    font-size: 11px;
-    flex-shrink: 0;
-}
-
-/* =====================================================
-   NAVBAR
-===================================================== */
-
-#header {
-    position: relative !important;
-    width: 100% !important;
-    min-height: 78px !important;
-    height: auto !important;
-    margin: 0 !important;
-    padding: 12px 28px 12px 290px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    background: white !important;
-    color: var(--eventa-text) !important;
-    border-bottom: 1px solid var(--eventa-border) !important;
-    box-shadow: 0 2px 8px rgba(23,43,77,.025);
-}
-
-#branding {
-    display: none !important;
-}
-
-#user-tools {
-    float: none !important;
-    margin: 0 0 0 auto !important;
-    padding: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: 8px;
-    color: var(--eventa-text) !important;
-    font-size: 12px !important;
-    line-height: 1.5 !important;
-}
-
-#user-tools a,
-#header a:link,
-#header a:visited {
-    color: var(--eventa-text) !important;
-    text-decoration: none;
-}
-
-#user-tools a:hover,
-#header a:hover {
-    color: var(--eventa-blue) !important;
-}
-
-#user-tools button {
-    color: var(--eventa-text) !important;
-}
-
-/* Botão de tema */
-
-.theme-toggle {
-    display: flex !important;
-    align-items: center;
-    margin-left: 15px !important;
-    flex-shrink: 0;
-}
-
-.theme-toggle button {
+#jazzy-sidebar #jazzy-logo .brand-image {
+    float: none;
+    margin: 0;
     width: 42px;
     height: 42px;
-    border: none !important;
-    border-radius: 50% !important;
-    background: #edf2fa !important;
-    color: var(--eventa-blue) !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: .2s;
-}
-
-.theme-toggle button:hover {
-    background: #dce8fa !important;
-    transform: rotate(15deg);
-}
-
-/* =====================================================
-   BREADCRUMBS
-===================================================== */
-
-.breadcrumbs {
-    margin: 0 !important;
-    width: 100% !important;
-    padding: 13px 28px !important;
-    background: white !important;
-    color: var(--eventa-muted) !important;
-    border-bottom: 1px solid var(--eventa-border);
-    font-size: 13px;
-}
-
-.breadcrumbs a {
-    color: var(--eventa-blue) !important;
-}
-
-/* =====================================================
-   ÁREA PRINCIPAL
-===================================================== */
-
-#main {
-    margin-left: 264px !important;
-    width: calc(100% - 264px) !important;
-    min-height: calc(100vh - 78px);
-    background: var(--eventa-background);
-}
-
-#content {
-    width: 100%;
-    padding: 30px !important;
-    background: var(--eventa-background);
-}
-
-#content-main {
-    width: 100%;
-    min-width: 0;
-}
-
-#content h1 {
-    margin-bottom: 22px !important;
-    color: var(--eventa-text) !important;
-    font-size: 26px !important;
-    font-weight: 700 !important;
-}
-
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
-.dashboard #content {
-    padding: 30px !important;
-}
-
-.dashboard .module {
-    overflow: hidden;
-    background: white;
-    border: 1px solid var(--eventa-border);
-    border-radius: 14px;
-    box-shadow: 0 3px 10px rgba(23,43,77,.04);
-}
-
-.dashboard .module caption {
-    background: var(--eventa-navy);
-    color: white;
-}
-
-.dashboard-heading h1 {
-    margin-bottom: 6px !important;
-    color: var(--eventa-text) !important;
-    font-size: 26px !important;
-    font-weight: 700 !important;
-}
-
-.dashboard-heading p {
-    color: var(--eventa-muted) !important;
-    font-size: 14px !important;
-}
-
-/* =====================================================
-   LISTAGENS
-===================================================== */
-
-#changelist {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    background: transparent !important;
-}
-
-#changelist-form {
-    min-width: 0;
-}
-
-#changelist .changelist-form-container {
-    min-width: 0;
-}
-
-#changelist-search,
-#changelist .actions,
-#changelist .results,
-#changelist-filter {
-    background: white !important;
-    color: var(--eventa-text) !important;
-    border: 1px solid var(--eventa-border) !important;
-    border-radius: 12px !important;
-}
-
-#changelist-search {
-    padding: 16px !important;
-    margin-bottom: 18px !important;
-}
-
-#changelist-search input[type="text"] {
-    min-height: 40px;
-    padding: 9px 12px !important;
-    background: white !important;
-    color: var(--eventa-text) !important;
-    border: 1px solid #dce3ed !important;
-    border-radius: 7px !important;
-}
-
-#changelist-search input[type="submit"] {
-    min-height: 40px;
-    padding: 9px 18px !important;
-    background: var(--eventa-blue) !important;
-    color: white !important;
-    border: 0 !important;
-    border-radius: 7px !important;
-}
-
-/* =====================================================
-   TABELAS
-===================================================== */
-
-#changelist .results {
-    overflow-x: auto;
-}
-
-#result_list {
-    width: 100%;
-    border-collapse: collapse;
-    background: white !important;
-}
-
-#result_list thead th {
-    padding: 15px !important;
-    background: #edf2fa !important;
-    color: var(--eventa-navy) !important;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-bottom: 1px solid var(--eventa-border);
-}
-
-#result_list tbody td,
-#result_list tbody th {
-    padding: 15px !important;
-    background: white !important;
-    color: var(--eventa-text) !important;
-    border-bottom: 1px solid var(--eventa-border);
-}
-
-#result_list tbody tr:hover td,
-#result_list tbody tr:hover th {
-    background: #f7f9fc !important;
-}
-
-#result_list a {
-    color: var(--eventa-blue) !important;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-/* =====================================================
-   BOTÕES
-===================================================== */
-
-.object-tools {
-    margin-bottom: 18px !important;
-}
-
-.object-tools a,
-.object-tools a.addlink {
-    padding: 11px 18px !important;
-    background: var(--eventa-blue) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    text-decoration: none !important;
-    font-weight: 600;
-}
-
-.object-tools a:hover {
-    background: #316fcf !important;
-}
-
-.button,
-input.default,
-.submit-row input,
-a.button,
-input[type="submit"] {
-    padding: 10px 17px !important;
-    background: var(--eventa-blue) !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 7px !important;
-    font-weight: 600 !important;
-    text-decoration: none !important;
-    cursor: pointer;
-}
-
-.button:hover,
-input.default:hover,
-.submit-row input:hover,
-a.button:hover,
-input[type="submit"]:hover {
-    background: #316fcf !important;
-}
-
-.deletelink {
-    padding: 9px 14px !important;
-    background: #fff0f0 !important;
-    color: #c03939 !important;
-    border-radius: 7px !important;
-}
-
-/* =====================================================
-   FILTROS
-===================================================== */
-
-#changelist-filter {
-    padding: 15px !important;
-    margin-left: 18px;
-}
-
-#changelist-filter h2 {
-    padding: 12px !important;
-    background: var(--eventa-navy) !important;
-    color: white !important;
-    border-radius: 7px;
-    font-size: 13px;
-}
-
-#changelist-filter a {
-    color: var(--eventa-muted) !important;
-}
-
-#changelist-filter li.selected a {
-    color: var(--eventa-blue) !important;
-}
-
-/* =====================================================
-   FORMULÁRIOS DE CADASTRO E EDIÇÃO
-===================================================== */
-
-fieldset.module,
-.inline-group {
-    overflow: hidden;
-    margin-bottom: 22px !important;
-    background: white !important;
-    border: 1px solid var(--eventa-border) !important;
-    border-radius: 12px !important;
-}
-
-fieldset.module h2,
-.inline-group h2 {
-    padding: 15px 20px !important;
-    background: #edf2fa !important;
-    color: var(--eventa-navy) !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-}
-
-.form-row {
-    padding: 16px 20px !important;
-    border-bottom: 1px solid var(--eventa-border);
-}
-
-.aligned label {
-    color: var(--eventa-text) !important;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-/* Campos de formulário */
-
-.form-row input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
-.form-row select,
-.form-row textarea,
-.vTextField,
-.vLargeTextField,
-.vDateField,
-.vTimeField,
-.vIntegerField {
-    max-width: 100%;
-    padding: 10px 12px !important;
-    background: white !important;
-    color: var(--eventa-text) !important;
-    border: 1px solid #dce3ed !important;
-    border-radius: 7px !important;
+    max-height: 42px;
+    padding: .5rem;
+    border-radius: 12px;
+    background: #426da8;
     box-shadow: none !important;
 }
-
-.form-row input:focus,
-.form-row select:focus,
-.form-row textarea:focus {
-    border-color: var(--eventa-blue) !important;
-    outline: 0;
-    box-shadow: 0 0 0 .2rem rgba(67,133,232,.12) !important;
+#jazzy-sidebar .brand-text { font-size: .85rem; }
+#jazzy-sidebar .user-panel { display: none !important; }
+#jazzy-sidebar .sidebar { padding: 0 1rem 1rem; }
+#jazzy-sidebar .nav-sidebar { width: 100%; margin: 0 auto; }
+#jazzy-sidebar .nav-sidebar::before {
+    content: "MENU PRINCIPAL";
+    display: block;
+    padding: .75rem .65rem;
+    color: #a0b5cf;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .08em;
 }
-
-/* Checkboxes e radios */
-
-.form-row input[type="checkbox"],
-.form-row input[type="radio"] {
-    accent-color: var(--eventa-blue);
+#jazzy-sidebar .nav-sidebar .nav-header {
+    padding: 1.75rem .65rem .75rem;
+    color: #a0b5cf;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    white-space: normal;
 }
-
-/* Ajuda dos campos */
-
-.help,
-.helptext,
-p.help {
-    color: var(--eventa-muted) !important;
-    font-size: 11px !important;
-}
-
-/* Área dos botões do formulário */
-
-.submit-row {
-    padding: 18px 20px !important;
+#jazzy-sidebar .nav-sidebar .nav-item { width: 100%; }
+#jazzy-sidebar .nav-sidebar .nav-link {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    background: white !important;
-    border: 1px solid var(--eventa-border) !important;
-    border-radius: 12px !important;
-}
-
-/* =====================================================
-   MENSAGENS
-===================================================== */
-
-.messagelist li {
-    padding: 13px 16px;
-    margin-bottom: 10px;
+    align-items: center;
+    gap: .65rem;
+    width: 100%;
+    min-height: 50px;
+    margin-bottom: .35rem;
+    padding: .75rem .65rem;
     border-radius: 9px;
+    color: #c1cede;
+    background: transparent;
+    box-shadow: none;
+    font-size: .875rem;
 }
-
-/* =====================================================
-   PAGINAÇÃO
-===================================================== */
-
-.paginator {
-    padding: 15px !important;
-    color: var(--eventa-muted);
+#jazzy-sidebar .nav-sidebar .nav-icon {
+    flex: 0 0 1.5rem;
+    width: 1.5rem;
+    margin: 0;
+    text-align: center;
+    color: #abc3df;
+    font-size: 1.1rem;
 }
-
-/* =====================================================
-   RESPONSIVIDADE
-===================================================== */
-
-@media (max-width: 991px) {
-    .eventa-sidebar {
-        width: 240px;
-        min-width: 240px;
-    }
-
-    #header {
-        padding-left: 260px !important;
-    }
-
-    #main {
-        margin-left: 240px !important;
-        width: calc(100% - 240px) !important;
-    }
+#jazzy-sidebar .nav-sidebar .nav-link > p { margin: 0; }
+#jazzy-sidebar .nav-sidebar .nav-link:hover {
+    background: #223c5d;
+    color: #fff;
 }
-
-@media (max-width: 767px) {
-    .eventa-sidebar {
-        display: none;
-    }
-
-    #header {
-        min-height: 65px !important;
-        padding: 14px 18px !important;
-    }
-
-    #user-tools {
-        flex-wrap: wrap;
-        font-size: 10px !important;
-    }
-
-    #main {
-        margin-left: 0 !important;
-        width: 100% !important;
-    }
-
-    #content {
-        padding: 18px !important;
-    }
-
-    #changelist-filter {
-        margin: 15px 0 0;
-    }
-
-    .eventa-user-info strong {
-        max-width: 160px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+#jazzy-sidebar .nav-sidebar .nav-link.active {
+    background: #283f60;
+    color: #fff;
+    box-shadow: inset 3px 0 #7da4e0;
+}
+#jazzy-sidebar .nav-sidebar .nav-link.active .nav-icon { color: #fff; }
+#jazzy-sidebar .nav-sidebar .nav-link:focus-visible {
+    outline: 2px solid #a8caff;
+    outline-offset: -2px;
+}
+@media (min-width: 992px) {
+    .sidebar-mini.sidebar-collapse #jazzy-sidebar:not(:hover) .sidebar { padding-inline: .5rem; }
+    .sidebar-mini.sidebar-collapse #jazzy-sidebar:not(:hover) .nav-sidebar::before { display: none; }
+    .sidebar-mini.sidebar-collapse #jazzy-sidebar:not(:hover) .nav-link { justify-content: center; gap: 0; }
+    .sidebar-mini.sidebar-collapse #jazzy-sidebar:not(:hover) #jazzy-logo { padding-inline: 1rem; }
 }
