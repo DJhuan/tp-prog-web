@@ -29,6 +29,18 @@ class Evento(models.Model):
     local = models.CharField(max_length=200)
     capacidade = models.PositiveIntegerField()
 
+    foto = models.ImageField(
+        upload_to="eventos/fotos/",
+        blank=True,
+        help_text="Imagem do card do evento (proporção 4:3)."
+    )
+
+    banner = models.ImageField(
+        upload_to="eventos/banners/",
+        blank=True,
+        help_text="Faixa larga exibida no topo da página do evento (proporção 16:5)."
+    )
+
     status = models.CharField(
         max_length=20,
         choices=Status.choices,

@@ -31,7 +31,7 @@ WORKDIR /app
 
 RUN addgroup --system app \
     && adduser --system --ingroup app app \
-    && mkdir -p /app/data
+    && mkdir -p /app/data /app/media
 
 COPY --from=builder /opt/venv /opt/venv
 COPY --from=builder --chown=app:app /app/code /app/code
