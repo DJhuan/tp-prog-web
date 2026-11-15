@@ -83,3 +83,50 @@ class AdminFilterTests(TestCase):
 
     def test_unknown_custom_filter_does_not_hide_results(self):
         self.assertEqual(len(self.results("eventos_evento", {"periodo": "invalido"})), 4)
+
+
+class CatalogoPublicoTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        produtora = Produtora.objects.create(nome="Prod", cnpj="333", email="p@example.com")
+        coord = Usuario.objects.create_user(email="c@example.com", perfil="COORDENADOR", produtora=produtora)
+        hoje = timezone.localdate()
+
+        def criar(nome, dias, status="PUBLICADO", local="Teatro"):
+            return Evento.objects.create(
+                nome=nome, data=hoje + timedelta(days=dias), horario=time(20), local=local,
+                capacidade=100, produtora=produtora, coordenador=coord, status=status,
+            )
+
+        cls.show = criar("Show de Rock", 5, local="Arena")
+        cls.peca = criar("Peça de Teatro", 10)
+        cls.passado = criar("Evento Passado", -1)
+        cls.rascunho = criar("Rascunho", 3, status="RASCUNHO")
+        cls.pista = TipoIngresso.objects.create(nome="Pista", preco=80, quantidade=2, evento=cls.show)
+        TipoIngresso.objects.create(nome="VIP", preco=200, quantidade=5, evento=cls.show)
+        participante = Usuario.objects.create_user(email="u@example.com", perfil="PARTICIPANTE")
+        pedido = Pedido.objects.create(participante=participante, valor_total=160)
+        Ingresso.objects.create(pedido=pedido, tipo_ingresso=cls.pista)
+        Ingresso.objects.create(pedido=pedido, tipo_ingresso=cls.pista)
+
+    def test_lista_so_publicados_futuros_em_ordem(self):
+        response = self.client.get(reverse("eventos:lista"))
+        self.assertEqual(list(response.context["eventos"]), [self.show, self.peca])
+        self.assertContains(response, "A partir de R$ 80,00")
+        self.assertContains(response, "Ingressos em breve")
+
+    def test_busca_por_nome_ou_local(self):
+        response = self.client.get(reverse("eventos:lista"), {"q": "arena"})
+        self.assertEqual(list(response.context["eventos"]), [self.show])
+
+    def test_detalhe_mostra_esgotado_e_disponiveis(self):
+        response = self.client.get(reverse("eventos:detalhe", args=[self.show.pk]))
+        self.assertContains(response, "Esgotado")
+        self.assertContains(response, "5 disponíveis")
+        self.assertEqual(self.pista.restantes, 0)
+
+    def test_detalhe_de_rascunho_ou_passado_da_404(self):
+        for evento in (self.rascunho, self.passado):
+            with self.subTest(evento=evento.nome):
+                response = self.client.get(reverse("eventos:detalhe", args=[evento.pk]))
+                self.assertEqual(response.status_code, 404)

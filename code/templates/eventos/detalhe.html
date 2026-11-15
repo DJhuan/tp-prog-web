@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ evento.nome }}{% endblock %}
+
+{% block content %}
+<div class="mb-4 rounded overflow-hidden">
+  <img src="{% if evento.banner %}{{ evento.banner.url }}{% elif evento.foto %}{{ evento.foto.url }}{% else %}{% static 'img/evento-padrao.svg' %}{% endif %}"
+       class="w-100 object-fit-cover" style="aspect-ratio: 16 / 5;" alt="Banner do evento {{ evento.nome }}">
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-7">
+    <h1 class="h2">{{ evento.nome }}</h1>
+    <ul class="list-unstyled text-body-secondary mb-4">
+      <li><strong>Data:</strong> {{ evento.data|date:"l, d \d\e F \d\e Y" }} às {{ evento.horario|time:"H:i" }}</li>
+      <li><strong>Local:</strong> {{ evento.local }}</li>
+      <li><strong>Produtora:</strong> {{ evento.produtora.nome }}</li>
+    </ul>
+    {% if evento.descricao %}
+      <h2 class="h5">Sobre o evento</h2>
+      <p>{{ evento.descricao|linebreaksbr }}</p>
+    {% endif %}
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 mb-3">Ingressos</h2>
+        {% for tipo in tipos_ingresso %}
+          <div class="d-flex justify-content-between align-items-start py-2 {% if not forloop.last %}border-bottom{% endif %}">
+            <div>
+              <div class="fw-semibold">{{ tipo.nome }}</div>
+              {% if tipo.descricao %}<div class="small text-body-secondary">{{ tipo.descricao }}</div>{% endif %}
+              <div class="small {% if tipo.disponiveis %}text-body-secondary{% else %}text-danger{% endif %}">
+                {% if tipo.disponiveis %}{{ tipo.disponiveis }} disponíveis{% else %}Esgotado{% endif %}
+              </div>
+            </div>
+            <div class="fw-semibold text-nowrap ms-3">R$ {{ tipo.preco|floatformat:2 }}</div>
+            {# Formulário "adicionar ao carrinho" entra aqui junto com o app de carrinho. #}
+          </div>
+        {% empty %}
+          <p class="text-body-secondary mb-0">Os ingressos deste evento ainda não estão à venda.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -182,3 +182,5 @@ staticfiles/
 Thumbs.db
 
 /sandbox/
+# Uploads (imagens dos eventos)
+code/media/

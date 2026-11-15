@@ -1,5 +1,6 @@
 
 import os
+import sys
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -104,11 +105,30 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(os.getenv('MEDIA_ROOT', BASE_DIR / 'media'))
+
+# STATICFILES_STORAGE foi removido no Django 5.1; a configuração atual é STORAGES.
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
+
+# Os testes rodam sem collectstatic, então não há manifest para consultar.
+if 'test' in sys.argv:
+    STORAGES['staticfiles']['BACKEND'] = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'contas.Usuario'
+
+LOGIN_URL = 'contas:entrar'
+LOGIN_REDIRECT_URL = 'contas:inicio'
+LOGOUT_REDIRECT_URL = 'eventos:lista'
 
 JAZZMIN_SETTINGS = {
     "site_title": "EVENTA",

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from .models import Produtora, Evento, TipoIngresso
 from .filters import PeriodoEventoFilter, PrecoIngressoFilter, ProdutoraComEventosFilter
@@ -15,6 +16,7 @@ class ProdutoraAdmin(admin.ModelAdmin):
 @admin.register(Evento)
 class EventoAdmin(admin.ModelAdmin):
     list_display = (
+        "miniatura",
         "nome",
         "data",
         "horario",
@@ -32,6 +34,29 @@ class EventoAdmin(admin.ModelAdmin):
     list_select_related = ("produtora", "coordenador")
     search_fields = ("nome", "local")
     filter_horizontal = ("organizadores",)
+    readonly_fields = ("previa_foto", "previa_banner")
+
+    @staticmethod
+    def _imagem(campo, altura):
+        if not campo:
+            return "—"
+        return format_html(
+            '<img src="{}" style="height:{}px;border-radius:4px;object-fit:cover;">',
+            campo.url,
+            altura,
+        )
+
+    @admin.display(description="Foto")
+    def miniatura(self, obj):
+        return self._imagem(obj.foto, 40)
+
+    @admin.display(description="Prévia da foto")
+    def previa_foto(self, obj):
+        return self._imagem(obj.foto, 160)
+
+    @admin.display(description="Prévia do banner")
+    def previa_banner(self, obj):
+        return self._imagem(obj.banner, 120)
 
 
 @admin.register(TipoIngresso)
