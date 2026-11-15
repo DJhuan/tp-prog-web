@@ -8,6 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('contas/', include('contas.urls')),
     path('', include('eventos.urls')),
+    path('', include('ingressos.urls')),
 
     # O WhiteNoise serve apenas arquivos estáticos, não uploads. Esta rota serve
     # as imagens enviadas também com DEBUG=False (uso acadêmico/apresentação).

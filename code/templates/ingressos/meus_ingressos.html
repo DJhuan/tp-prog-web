@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Meus ingressos{% endblock %}
+
+{% block content %}
+<h1 class="h2 mb-4">Meus ingressos</h1>
+
+{% for pedido in pedidos %}
+  <div class="card shadow-sm mb-4">
+    <div class="card-header d-flex flex-column flex-sm-row justify-content-between gap-1">
+      <span class="fw-semibold">Pedido #{{ pedido.pk }}</span>
+      <span class="text-body-secondary small">
+        {{ pedido.data_compra|date:"d/m/Y H:i" }} · R$ {{ pedido.valor_total|floatformat:2 }} · {{ pedido.get_status_display }}
+      </span>
+    </div>
+    <ul class="list-group list-group-flush">
+      {% for ingresso in pedido.ingressos.all %}
+        {% with evento=ingresso.tipo_ingresso.evento %}
+          <li class="list-group-item d-flex flex-column flex-md-row justify-content-between gap-2">
+            <div>
+              <div class="fw-semibold">{{ evento.nome }} · {{ ingresso.tipo_ingresso.nome }}</div>
+              <div class="small text-body-secondary">
+                {{ evento.data|date:"d/m/Y" }} às {{ evento.horario|time:"H:i" }} · {{ evento.local }}
+              </div>
+              <div class="small font-monospace mt-1">Código: {{ ingresso.codigo }}</div>
+            </div>
+            <div class="align-self-md-center">
+              {% if ingresso.status == "DISPONIVEL" %}
+                <span class="badge text-bg-success">Válido</span>
+              {% elif ingresso.status == "UTILIZADO" %}
+                <span class="badge text-bg-secondary">Utilizado em {{ ingresso.data_validacao|date:"d/m/Y H:i" }}</span>
+              {% else %}
+                <span class="badge text-bg-danger">{{ ingresso.get_status_display }}</span>
+              {% endif %}
+            </div>
+          </li>
+        {% endwith %}
+      {% endfor %}
+    </ul>
+  </div>
+{% empty %}
+  <div class="text-center py-5">
+    <p class="text-body-secondary">Você ainda não comprou ingressos.</p>
+    <a href="{% url 'eventos:lista' %}" class="btn btn-primary">Ver eventos</a>
+  </div>
+{% endfor %}
+{% endblock %}

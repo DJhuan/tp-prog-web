@@ -36,8 +36,17 @@
                 {% if tipo.disponiveis %}{{ tipo.disponiveis }} disponíveis{% else %}Esgotado{% endif %}
               </div>
             </div>
-            <div class="fw-semibold text-nowrap ms-3">R$ {{ tipo.preco|floatformat:2 }}</div>
-            {# Formulário "adicionar ao carrinho" entra aqui junto com o app de carrinho. #}
+            <div class="text-end ms-3">
+              <div class="fw-semibold text-nowrap">R$ {{ tipo.preco|floatformat:2 }}</div>
+              {% if tipo.disponiveis %}
+                <form method="post" action="{% url 'ingressos:carrinho_adicionar' tipo.pk %}" class="d-flex gap-1 mt-1">
+                  {% csrf_token %}
+                  <input type="number" name="quantidade" value="1" min="1" max="{{ tipo.disponiveis }}"
+                         class="form-control form-control-sm" style="width: 4.5rem;" aria-label="Quantidade de {{ tipo.nome }}">
+                  <button type="submit" class="btn btn-primary btn-sm text-nowrap">Adicionar</button>
+                </form>
+              {% endif %}
+            </div>
           </div>
         {% empty %}
           <p class="text-body-secondary mb-0">Os ingressos deste evento ainda não estão à venda.</p>

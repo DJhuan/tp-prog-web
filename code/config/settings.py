@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'config.context_processors.eventa_dashboard',
+                'ingressos.context_processors.carrinho',
             ],
         },
     },

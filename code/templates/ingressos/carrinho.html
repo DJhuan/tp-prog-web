@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Carrinho{% endblock %}
+
+{% block content %}
+<h1 class="h2 mb-4">Carrinho</h1>
+
+{% if itens %}
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th scope="col">Ingresso</th>
+            <th scope="col" class="text-end">Preço</th>
+            <th scope="col" class="text-center">Qtd.</th>
+            <th scope="col" class="text-end">Subtotal</th>
+            <th scope="col"><span class="visually-hidden">Ações</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in itens %}
+            <tr>
+              <td>
+                <div class="fw-semibold">{{ item.tipo.nome }}</div>
+                <a href="{% url 'eventos:detalhe' item.tipo.evento.pk %}" class="small">{{ item.tipo.evento.nome }}</a>
+                <div class="small text-body-secondary">{{ item.tipo.evento.data|date:"d/m/Y" }}</div>
+              </td>
+              <td class="text-end text-nowrap">R$ {{ item.tipo.preco|floatformat:2 }}</td>
+              <td class="text-center">{{ item.quantidade }}</td>
+              <td class="text-end text-nowrap">R$ {{ item.subtotal|floatformat:2 }}</td>
+              <td class="text-end">
+                <form method="post" action="{% url 'ingressos:carrinho_remover' item.tipo.pk %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-outline-danger btn-sm">Remover</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="3" class="text-end">Total</th>
+            <th class="text-end text-nowrap">R$ {{ total|floatformat:2 }}</th>
+            <th></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mt-3">
+    <a href="{% url 'eventos:lista' %}" class="btn btn-outline-secondary">Continuar comprando</a>
+    <form method="post" action="{% url 'ingressos:comprar' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success w-100">Comprar · R$ {{ total|floatformat:2 }}</button>
+    </form>
+  </div>
+{% else %}
+  <div class="text-center py-5">
+    <p class="text-body-secondary">Seu carrinho está vazio.</p>
+    <a href="{% url 'eventos:lista' %}" class="btn btn-primary">Ver eventos</a>
+  </div>
+{% endif %}
+{% endblock %}

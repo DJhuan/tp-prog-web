@@ -13,7 +13,16 @@
           {% if user.perfil == "ADMINISTRADOR" or user.perfil == "VENDEDOR" %}
             <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Administração</a></li>
           {% endif %}
-          {# Links do participante (carrinho, meus ingressos), coordenador e staff entram aqui. #}
+          {% if user.perfil == "PARTICIPANTE" %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'ingressos:meus_ingressos' %}">Meus ingressos</a></li>
+          {% endif %}
+        {% endif %}
+        {% if not user.is_authenticated or user.perfil == "PARTICIPANTE" %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ingressos:carrinho' %}">
+              Carrinho{% if carrinho_quantidade %} <span class="badge text-bg-primary rounded-pill">{{ carrinho_quantidade }}</span>{% endif %}
+            </a>
+          </li>
         {% endif %}
       </ul>
 
