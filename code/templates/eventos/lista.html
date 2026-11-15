@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Eventos disponíveis{% endblock %}
+
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+  <div>
+    <h1 class="h2 mb-1">Eventos disponíveis</h1>
+    <p class="text-body-secondary mb-0">Escolha um evento e garanta seu ingresso.</p>
+  </div>
+
+  <form method="get" class="d-flex flex-column flex-sm-row gap-2" role="search">
+    <input type="search" name="q" value="{{ busca }}" class="form-control" placeholder="Buscar por nome ou local" aria-label="Buscar">
+    <input type="date" name="data" value="{{ data_filtro }}" class="form-control" aria-label="A partir da data">
+    <button type="submit" class="btn btn-primary">Buscar</button>
+    {% if busca or data_filtro %}
+      <a href="{% url 'eventos:lista' %}" class="btn btn-outline-secondary">Limpar</a>
+    {% endif %}
+  </form>
+</div>
+
+{% if eventos %}
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+    {% for evento in eventos %}
+      <div class="col">{% include "includes/card_evento.html" with evento=evento %}</div>
+    {% endfor %}
+  </div>
+
+  {% if is_paginated %}
+    <nav class="mt-4" aria-label="Paginação">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if busca %}&q={{ busca|urlencode }}{% endif %}{% if data_filtro %}&data={{ data_filtro }}{% endif %}">Anterior</a>
+          </li>
+        {% endif %}
+        <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
+        {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if busca %}&q={{ busca|urlencode }}{% endif %}{% if data_filtro %}&data={{ data_filtro }}{% endif %}">Próxima</a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+  {% endif %}
+{% else %}
+  <div class="text-center py-5 text-body-secondary">
+    {% if busca or data_filtro %}
+      Nenhum evento encontrado para essa busca.
+    {% else %}
+      Nenhum evento disponível no momento.
+    {% endif %}
+  </div>
+{% endif %}
+{% endblock %}

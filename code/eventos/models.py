@@ -85,3 +85,12 @@ class TipoIngresso(models.Model):
 
     def __str__(self):
         return f"{self.nome} - {self.evento.nome}"
+
+    @property
+    def vendidos(self):
+        """Ingressos emitidos deste tipo, sem contar os cancelados."""
+        return self.ingressos.exclude(status="CANCELADO").count()
+
+    @property
+    def restantes(self):
+        return max(self.quantidade - self.vendidos, 0)

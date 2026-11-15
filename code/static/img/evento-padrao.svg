@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Evento sem imagem">
+  <rect width="800" height="600" fill="#6c757d"/>
+  <g fill="none" stroke="#ffffff" stroke-width="16" stroke-linejoin="round" opacity="0.85">
+    <path d="M250 230h300a20 20 0 0 1 20 20v30a40 40 0 0 0 0 80v30a20 20 0 0 1-20 20H250a20 20 0 0 1-20-20v-30a40 40 0 0 0 0-80v-30a20 20 0 0 1 20-20z"/>
+    <path d="M460 240v160" stroke-dasharray="16 16"/>
+  </g>
+  <text x="400" y="500" fill="#ffffff" font-family="sans-serif" font-size="40" text-anchor="middle" opacity="0.85">EVENTA</text>
+</svg>
