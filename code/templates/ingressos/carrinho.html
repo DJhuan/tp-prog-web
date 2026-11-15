@@ -51,7 +51,10 @@
 
   <div class="d-flex flex-column flex-sm-row justify-content-between gap-2 mt-3">
     <a href="{% url 'eventos:lista' %}" class="btn btn-outline-secondary">Continuar comprando</a>
-    {# O botão "Finalizar compra" entra com a tela de compra. #}
+    <form method="post" action="{% url 'ingressos:comprar' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-success w-100">Comprar · R$ {{ total|floatformat:2 }}</button>
+    </form>
   </div>
 {% else %}
   <div class="text-center py-5">

@@ -4,8 +4,6 @@ from eventos.models import TipoIngresso
 
 
 class Carrinho:
-    """Carrinho guardado na sessão: {"<id do tipo de ingresso>": quantidade}."""
-
     CHAVE = "carrinho"
 
     def __init__(self, request):
@@ -13,18 +11,9 @@ class Carrinho:
         self.itens = self.session.setdefault(self.CHAVE, {})
 
     def adicionar(self, tipo, quantidade):
-        """Soma a quantidade ao item, sem passar do que ainda está disponível.
-
-        Retorna a quantidade final do item no carrinho.
-        """
         chave = str(tipo.pk)
-        nova = min(self.itens.get(chave, 0) + quantidade, tipo.restantes)
-        if nova > 0:
-            self.itens[chave] = nova
-        else:
-            self.itens.pop(chave, None)
+        self.itens[chave] = self.itens.get(chave, 0) + quantidade
         self._salvar()
-        return nova
 
     def remover(self, tipo_id):
         self.itens.pop(str(tipo_id), None)
