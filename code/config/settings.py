@@ -1,4 +1,3 @@
-
 import os
 import sys
 from pathlib import Path
@@ -24,8 +23,6 @@ ALLOWED_HOSTS = [
 ]
 
 INSTALLED_APPS = [
-    'jazzmin',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,25 +128,4 @@ LOGIN_URL = 'contas:entrar'
 LOGIN_REDIRECT_URL = 'contas:inicio'
 LOGOUT_REDIRECT_URL = 'eventos:lista'
 
-JAZZMIN_SETTINGS = {
-    "site_title": "EVENTA",
-    "site_header": "EVENTA",
-    "site_brand": "EVENTA",
-    "welcome_sign": "Bem-vindo ao EVENTA",
-    "copyright": "EVENTA",
-    "use_google_fonts_cdn": False,
-    "custom_css": "css/admin.css",
-    "show_ui_builder": False,
-    "icons": {
-        "contas.Usuario": "fas fa-users",
-        "eventos.Produtora": "fas fa-building",
-        "eventos.Evento": "fas fa-calendar-alt",
-        "eventos.TipoIngresso": "fas fa-ticket-alt",
-        "ingressos.Ingresso": "fas fa-ticket-alt",
-        "ingressos.Pedido": "fas fa-receipt",
-    },
-}
-JAZZMIN_UI_TWEAKS = {
-    "theme": "flatly",
-    "dark_mode_theme": "darkly",
-}
+

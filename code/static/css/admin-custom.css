@@ -1,0 +1,1136 @@
+/* =====================================================
+   1. VARIÁVEIS
+===================================================== */
+
+:root {
+    --eventa-navy: #172B4D;
+    --eventa-blue: #3B82F6;
+    --eventa-blue-hover: #2563EB;
+
+    --eventa-sidebar-text: #C6D3E5;
+    --eventa-sidebar-hover: #263F63;
+
+    --eventa-background: #F4F6FA;
+    --eventa-surface: #FFFFFF;
+    --eventa-text: #263449;
+    --eventa-muted: #778397;
+    --eventa-border: #E7EBF1;
+
+    --eventa-radius: 14px;
+    --eventa-sidebar-width: 264px;
+    --eventa-header-height: 66px;
+}
+
+/* Tema escuro nativo do Django */
+html[data-theme="dark"] {
+    --eventa-background: #111827;
+    --eventa-surface: #1F2937;
+    --eventa-text: #E5E7EB;
+    --eventa-muted: #A0AEC0;
+    --eventa-border: #374151;
+
+    --eventa-sidebar-hover: #26364D;
+}
+
+
+/* =====================================================
+   2. ESTRUTURA GERAL
+===================================================== */
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: var(--eventa-background);
+    color: var(--eventa-text);
+}
+
+#container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    margin-left: var(--eventa-sidebar-width);
+    padding-top: var(--eventa-header-height);
+    box-sizing: border-box;
+    background: var(--eventa-background);
+}
+
+.main > main.content {
+    min-width: 0;
+    padding: 30px 34px;
+    background: var(--eventa-background);
+}
+
+#content {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#content h1 {
+    margin: 0 0 22px;
+    color: var(--eventa-text);
+    font-size: 26px;
+    font-weight: 700;
+}
+
+#content h2,
+#content h3 {
+    color: var(--eventa-text);
+}
+
+#footer {
+    margin-left: var(--eventa-sidebar-width);
+    padding: 18px 32px;
+    border-top: 1px solid var(--eventa-border);
+    background: var(--eventa-surface);
+    color: var(--eventa-muted);
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   3. CABEÇALHO
+===================================================== */
+
+#header {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    left: var(--eventa-sidebar-width);
+
+    height: var(--eventa-header-height);
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 0 32px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    border-bottom: 1px solid var(--eventa-border);
+    box-shadow: 0 2px 8px rgba(23, 43, 77, .03);
+}
+
+#branding {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-width: 0;
+}
+
+.eventa-brand a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--eventa-navy);
+    text-decoration: none;
+
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: .3px;
+}
+
+html[data-theme="dark"] .eventa-brand a {
+    color: #FFFFFF;
+}
+
+.eventa-brand-icon {
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.eventa-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--eventa-muted);
+    font-size: 13px;
+}
+
+.eventa-breadcrumb-separator {
+    color: #B8C2D0;
+}
+
+
+/* =====================================================
+   4. INFORMAÇÕES DO USUÁRIO
+===================================================== */
+
+#user-tools.eventa-user-tools {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    margin: 0;
+    padding: 0;
+
+    color: var(--eventa-text);
+    font-size: 12px;
+    text-align: right;
+}
+
+.eventa-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.eventa-user-email {
+    color: var(--eventa-text);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.eventa-user-role {
+    color: var(--eventa-muted);
+    font-size: 11px;
+}
+
+#logout-form {
+    display: inline;
+    margin: 0;
+}
+
+#user-tools .eventa-logout {
+    padding: 8px 13px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--eventa-text);
+
+    font: inherit;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#user-tools .eventa-logout:hover {
+    border-color: var(--eventa-blue);
+    color: var(--eventa-blue);
+}
+
+/* Seletor de tema nativo */
+#user-tools #django-admin-theme-toggle {
+    margin: 0;
+    padding: 7px;
+}
+
+
+/* =====================================================
+   5. MENU LATERAL
+===================================================== */
+
+.eventa-sidebar {
+    position: fixed;
+    z-index: 110;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: var(--eventa-sidebar-width);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+}
+
+.eventa-sidebar-brand {
+    min-height: var(--eventa-header-height);
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 24px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+
+.eventa-logo {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.eventa-sidebar-brand strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: 17px;
+    letter-spacing: .5px;
+}
+
+.eventa-sidebar-brand small {
+    display: block;
+    margin-top: 3px;
+
+    color: var(--eventa-sidebar-text);
+    font-size: 11px;
+}
+
+.eventa-navigation {
+    flex: 1;
+    padding: 22px 14px;
+}
+
+.eventa-menu-label {
+    display: block;
+    margin: 18px 10px 9px;
+
+    color: #91A5C2;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.eventa-menu-section:first-child .eventa-menu-label {
+    margin-top: 0;
+}
+
+.eventa-menu-section {
+    margin-top: 20px;
+}
+
+.eventa-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 44px;
+    margin: 3px 0;
+    padding: 0 12px;
+
+    border-radius: 8px;
+
+    color: var(--eventa-sidebar-text);
+    font-size: 13px;
+    text-decoration: none;
+
+    transition: background .2s ease, color .2s ease;
+}
+
+.eventa-menu-item:hover {
+    background: var(--eventa-sidebar-hover);
+    color: #FFFFFF;
+}
+
+.eventa-menu-item.active {
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.eventa-menu-icon {
+    width: 20px;
+    flex-shrink: 0;
+
+    color: #AFC9ED;
+    font-size: 16px;
+    text-align: center;
+}
+
+.eventa-menu-item.active .eventa-menu-icon {
+    color: #FFFFFF;
+}
+
+.eventa-sidebar-footer {
+    margin: 0 16px;
+    padding: 18px 10px;
+
+    border-top: 1px solid rgba(255, 255, 255, .12);
+
+    color: #91A5C2;
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   6. DASHBOARD
+===================================================== */
+
+/* Cabeçalho da página */
+.dashboard #content .dashboard-heading h1 {
+    display: block !important;
+
+    margin: 0 0 8px !important;
+
+    color: var(--eventa-text) !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+}
+
+.dashboard-heading {
+    margin-bottom: 28px;
+}
+
+.dashboard-heading p {
+    margin: 0;
+    color: var(--eventa-muted);
+    font-size: 14px;
+}
+
+/* Container dos indicadores */
+.dashboard .container-fluid {
+    width: 100%;
+}
+
+/* Quatro cards lado a lado */
+.dashboard .container-fluid > .row {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+    gap: 20px !important;
+    margin: 0 0 24px !important;
+}
+
+.dashboard .container-fluid > .row > div {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0;
+
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Card individual */
+.dashboard-card {
+    height: 100%;
+    min-height: 175px;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: var(--eventa-radius) !important;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+
+    transition: transform .2s, box-shadow .2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(23, 43, 77, .08);
+}
+
+.dashboard-card .card-body {
+    padding: 22px !important;
+}
+
+.dashboard-card .d-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.dashboard-card span {
+    color: var(--eventa-muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.dashboard-card h2 {
+    margin: 0 0 7px;
+
+    color: var(--eventa-text);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.dashboard-card p {
+    margin: 0;
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+/* Ícones dos indicadores */
+.dashboard-icon {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(59, 130, 246, .10);
+    color: var(--eventa-blue);
+
+    border-radius: 11px;
+    font-size: 19px;
+}
+
+/* Card de boas-vindas */
+.welcome-card {
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: var(--eventa-radius) !important;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+.welcome-card .card-body {
+    padding: 26px !important;
+}
+
+.welcome-card h4 {
+    margin: 0 0 10px;
+
+    color: var(--eventa-text);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.welcome-card p {
+    margin: 0;
+
+    color: var(--eventa-muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* Tema escuro do dashboard */
+html[data-theme="dark"] .dashboard-card,
+html[data-theme="dark"] .welcome-card {
+    background: var(--eventa-surface) !important;
+    border-color: var(--eventa-border) !important;
+}
+
+html[data-theme="dark"] .dashboard-card h2,
+html[data-theme="dark"] .welcome-card h4 {
+    color: var(--eventa-text);
+}
+
+
+/* =====================================================
+   7. MÓDULOS NATIVOS DO DASHBOARD
+===================================================== */
+
+.dashboard .module {
+    overflow: hidden;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+
+    background: var(--eventa-surface);
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .035);
+}
+
+.dashboard .module caption,
+.dashboard .module h2 {
+    padding: 13px 16px;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+
+    font-size: 13px;
+}
+
+.dashboard .module table {
+    width: 100%;
+}
+
+.dashboard .module table th,
+.dashboard .module table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--eventa-border);
+}
+
+.dashboard .module table tr:last-child th,
+.dashboard .module table tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* =====================================================
+   8. LISTAGENS E TABELAS
+===================================================== */
+
+#changelist {
+    display: block;
+    overflow: visible;
+
+    background: transparent !important;
+    border: 0;
+    box-shadow: none;
+}
+
+#changelist-form {
+    min-width: 0;
+}
+
+/* Busca, ações e filtros */
+#changelist-search,
+#changelist .actions,
+#changelist-filter {
+    padding: 16px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 10px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+#changelist-search {
+    margin-bottom: 16px;
+}
+
+#changelist-search input[type="text"] {
+    min-height: 40px;
+    padding: 9px 12px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 7px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+#changelist-search input[type="submit"] {
+    min-height: 40px;
+    padding: 9px 18px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+}
+
+/* Área da tabela */
+#changelist .results {
+    overflow-x: auto;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+
+    background: var(--eventa-surface);
+}
+
+#result_list {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: var(--eventa-surface);
+}
+
+#result_list thead th {
+    padding: 15px 16px;
+
+    background: #EDF2FA;
+    color: var(--eventa-navy);
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+#result_list tbody td,
+#result_list tbody th {
+    padding: 14px 16px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+#result_list tbody tr:last-child td,
+#result_list tbody tr:last-child th {
+    border-bottom: 0;
+}
+
+#result_list tbody tr:hover td,
+#result_list tbody tr:hover th {
+    background: #F5F8FD;
+}
+
+#result_list a {
+    color: var(--eventa-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+#result_list a:hover {
+    text-decoration: underline;
+}
+
+/* Tema escuro das tabelas */
+html[data-theme="dark"] #result_list thead th {
+    background: #26364D;
+    color: #E5E7EB;
+}
+
+html[data-theme="dark"] #result_list tbody tr:hover td,
+html[data-theme="dark"] #result_list tbody tr:hover th {
+    background: #26364D;
+}
+
+/* Botão adicionar */
+.object-tools {
+    margin-bottom: 18px !important;
+}
+
+.object-tools a,
+.object-tools a.addlink {
+    padding: 10px 16px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF !important;
+
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   9. FILTROS
+===================================================== */
+
+#changelist-filter {
+    margin-left: 18px;
+}
+
+#changelist-filter h2 {
+    padding: 12px;
+
+    border-radius: 7px;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+
+    font-size: 12px;
+}
+
+#changelist-filter li {
+    padding: 5px 0;
+    font-size: 12px;
+}
+
+#changelist-filter a {
+    color: var(--eventa-muted);
+}
+
+#changelist-filter li.selected a {
+    color: var(--eventa-blue);
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   10. FORMULÁRIOS
+===================================================== */
+
+form .module,
+fieldset.module,
+.inline-group {
+    margin-bottom: 22px;
+    overflow: hidden;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+
+    background: var(--eventa-surface);
+}
+
+fieldset.module h2,
+fieldset.module caption,
+.inline-group h2 {
+    padding: 15px 20px;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.form-row {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--eventa-border);
+}
+
+.form-row:last-child {
+    border-bottom: 0;
+}
+
+.form-row label,
+.aligned label {
+    color: var(--eventa-text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Campos */
+.form-row input:not([type="checkbox"]):not([type="radio"]),
+.form-row select,
+.form-row textarea,
+.aligned input:not([type="checkbox"]):not([type="radio"]),
+.aligned select,
+.aligned textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 40px;
+
+    padding: 9px 12px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 7px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    font: inherit;
+    font-size: 13px;
+}
+
+.form-row textarea,
+.aligned textarea {
+    min-height: 110px;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus,
+.aligned input:focus,
+.aligned select:focus,
+.aligned textarea:focus {
+    outline: none;
+
+    border-color: var(--eventa-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .12);
+}
+
+/* Ajuda e validação */
+.help,
+.helptext,
+p.help {
+    margin-top: 7px;
+
+    color: var(--eventa-muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.errorlist {
+    margin: 6px 0;
+    padding: 9px 12px;
+
+    border-radius: 7px;
+
+    background: #FEF2F2;
+    color: #B91C1C;
+
+    font-size: 12px;
+}
+
+.required label:after {
+    color: #EF4444;
+}
+
+
+/* =====================================================
+   11. BOTÕES E AÇÕES
+===================================================== */
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.addlink,
+.object-tools a {
+    min-height: 38px;
+    padding: 9px 16px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF !important;
+
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: background .2s, transform .2s;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.object-tools a:hover {
+    background: var(--eventa-blue-hover);
+    transform: translateY(-1px);
+}
+
+.submit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    padding: 16px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 10px;
+
+    background: var(--eventa-surface);
+}
+
+.submit-row .deletelink {
+    margin-left: auto;
+    color: #DC2626 !important;
+    background: #FEF2F2 !important;
+}
+
+.deletelink {
+    border-radius: 7px;
+}
+
+
+/* =====================================================
+   12. MENSAGENS
+===================================================== */
+
+.messagelist {
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.messagelist li {
+    margin-bottom: 9px;
+    padding: 13px 16px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 9px;
+
+    font-size: 13px;
+}
+
+.messagelist li.success {
+    background: #ECFDF5;
+    color: #047857;
+}
+
+.messagelist li.warning {
+    background: #FFFBEB;
+    color: #B45309;
+}
+
+.messagelist li.error {
+    background: #FEF2F2;
+    color: #B91C1C;
+}
+
+html[data-theme="dark"] .messagelist li {
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+
+/* =====================================================
+   13. PAGINAÇÃO E LINKS
+===================================================== */
+
+.paginator {
+    padding: 15px;
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+a:link,
+a:visited {
+    color: var(--eventa-blue);
+}
+
+
+/* =====================================================
+   14. TEMA ESCURO
+===================================================== */
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .main > main.content {
+    background: var(--eventa-background);
+    color: var(--eventa-text);
+}
+
+html[data-theme="dark"] .dashboard .module,
+html[data-theme="dark"] form .module,
+html[data-theme="dark"] fieldset.module,
+html[data-theme="dark"] .inline-group,
+html[data-theme="dark"] .submit-row,
+html[data-theme="dark"] #changelist-search,
+html[data-theme="dark"] #changelist .actions,
+html[data-theme="dark"] #changelist-filter,
+html[data-theme="dark"] #changelist .results {
+    background: var(--eventa-surface);
+    border-color: var(--eventa-border);
+}
+
+html[data-theme="dark"] .dashboard-card,
+html[data-theme="dark"] .welcome-card {
+    background: var(--eventa-surface) !important;
+    border-color: var(--eventa-border) !important;
+}
+
+html[data-theme="dark"] .dashboard-card h2,
+html[data-theme="dark"] .welcome-card h4,
+html[data-theme="dark"] #content h1 {
+    color: var(--eventa-text);
+}
+
+html[data-theme="dark"] .form-row input,
+html[data-theme="dark"] .form-row select,
+html[data-theme="dark"] .form-row textarea {
+    background: #111827;
+    color: var(--eventa-text);
+    border-color: var(--eventa-border);
+}
+
+
+/* =====================================================
+   15. RESPONSIVIDADE
+===================================================== */
+
+/* Tablets e telas menores */
+@media (max-width: 1100px) {
+    .dashboard .container-fluid > .row {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #header {
+        padding: 0 18px;
+    }
+
+    .main > main.content {
+        padding: 24px 20px;
+    }
+
+    #changelist-filter {
+        margin: 15px 0 0;
+    }
+}
+
+/* Celulares */
+@media (max-width: 650px) {
+    :root {
+        --eventa-sidebar-width: 0px;
+        --eventa-header-height: 60px;
+    }
+
+    .eventa-sidebar {
+        display: none;
+    }
+
+    #header {
+        left: 0;
+        padding: 0 14px;
+    }
+
+    #branding {
+        gap: 10px;
+    }
+
+    .eventa-breadcrumb,
+    .eventa-user-info {
+        display: none;
+    }
+
+    #user-tools.eventa-user-tools {
+        gap: 8px;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .main > main.content {
+        padding: 20px 14px;
+    }
+
+    #footer {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .dashboard .container-fluid > .row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .form-row {
+        padding: 13px;
+    }
+
+    .submit-row {
+        flex-direction: column;
+    }
+
+    .submit-row input {
+        width: 100%;
+    }
+}

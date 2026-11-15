@@ -3,6 +3,8 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.static import serve
 
+admin.site.index_template = "admin/index_personalizado.html"
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
