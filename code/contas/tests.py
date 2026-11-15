@@ -53,3 +53,75 @@ class AdminLoginTests(TestCase):
         self.assertContains(response, 'jazzmin-login-page')
         self.assertContains(response, 'id="jazzmin-dark-mode-theme"')
         self.assertContains(response, 'js/admin.js', count=1)
+
+
+class CadastroLoginLogoutTests(TestCase):
+    def test_cadastro_cria_participante_e_ja_faz_login(self):
+        response = self.client.post(reverse("contas:cadastrar"), {
+            "first_name": "Ana",
+            "last_name": "Souza",
+            "email": "ana@example.com",
+            "password1": "senha-forte-123",
+            "password2": "senha-forte-123",
+        })
+        self.assertRedirects(response, reverse("eventos:lista"))
+        usuario = Usuario.objects.get(email="ana@example.com")
+        self.assertEqual(usuario.perfil, Usuario.Perfil.PARTICIPANTE)
+        self.assertFalse(usuario.is_staff)
+        self.assertEqual(int(self.client.session["_auth_user_id"]), usuario.pk)
+
+    def test_cadastro_rejeita_email_repetido_e_senhas_diferentes(self):
+        Usuario.objects.create_user(email="ana@example.com", password="x", perfil="PARTICIPANTE")
+        response = self.client.post(reverse("contas:cadastrar"), {
+            "first_name": "Ana",
+            "email": "ana@example.com",
+            "password1": "senha-forte-123",
+            "password2": "outra-senha-456",
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("email", response.context["form"].errors)
+        self.assertIn("password2", response.context["form"].errors)
+        self.assertContains(response, "is-invalid")
+
+    def test_cadastro_ignora_perfil_enviado_no_post(self):
+        self.client.post(reverse("contas:cadastrar"), {
+            "first_name": "Eve",
+            "email": "eve@example.com",
+            "password1": "senha-forte-123",
+            "password2": "senha-forte-123",
+            "perfil": "ADMINISTRADOR",
+            "is_staff": "on",
+        })
+        usuario = Usuario.objects.get(email="eve@example.com")
+        self.assertEqual(usuario.perfil, Usuario.Perfil.PARTICIPANTE)
+        self.assertFalse(usuario.is_staff)
+
+    def test_login_redireciona_por_perfil(self):
+        Usuario.objects.create_user(email="p@example.com", password="senha-123", perfil="PARTICIPANTE")
+        Usuario.objects.create_superuser(email="adm@example.com", password="senha-123")
+        casos = (("p@example.com", reverse("eventos:lista")), ("adm@example.com", reverse("admin:index")))
+        for email, destino in casos:
+            with self.subTest(email=email):
+                client = Client()
+                response = client.post(reverse("contas:entrar"), {"username": email, "password": "senha-123"}, follow=True)
+                self.assertRedirects(response, destino)
+
+    def test_login_invalido_mostra_erro(self):
+        response = self.client.post(reverse("contas:entrar"), {"username": "x@example.com", "password": "errada"})
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.context["form"].non_field_errors())
+
+    def test_logout_por_post(self):
+        usuario = Usuario.objects.create_user(email="p@example.com", password="senha-123", perfil="PARTICIPANTE")
+        self.client.force_login(usuario)
+        response = self.client.post(reverse("contas:sair"))
+        self.assertRedirects(response, reverse("eventos:lista"))
+        self.assertNotIn("_auth_user_id", self.client.session)
+
+    def test_navbar_mostra_entrar_ou_sair(self):
+        response = self.client.get(reverse("eventos:lista"))
+        self.assertContains(response, reverse("contas:cadastrar"))
+        usuario = Usuario.objects.create_user(email="p@example.com", password="x", perfil="PARTICIPANTE")
+        self.client.force_login(usuario)
+        response = self.client.get(reverse("eventos:lista"))
+        self.assertContains(response, f'action="{reverse("contas:sair")}"')
