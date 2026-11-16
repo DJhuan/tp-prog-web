@@ -1,0 +1,437 @@
+
+/* ========================================
+   EVENTA - HOME E DESCOBERTA DE EVENTOS
+======================================== */
+
+.eventa-home {
+    --eventa-navy: #172B4D;
+    --eventa-blue: #3B82F6;
+    color: #263449;
+}
+
+/* BANNER */
+
+.eventa-hero {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 490px;
+    display: flex;
+    align-items: center;
+    padding: 55px 0 48px;
+    background:
+        radial-gradient(ellipse at 10% 100%, rgba(236, 72, 153, .38), transparent 38%),
+        radial-gradient(ellipse at 85% 15%, rgba(59, 130, 246, .65), transparent 40%),
+        linear-gradient(115deg, #27105F 0%, #4520A0 48%, #273EC4 100%);
+    color: white;
+}
+
+/* Área futura para imagem de fundo:
+   quando tivermos a fotografia, podemos aplicar
+   background-image com uma camada de contraste. */
+
+.eventa-hero::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 700px;
+    height: 700px;
+    top: -350px;
+    left: 22%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .055);
+}
+
+.eventa-hero::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 520px;
+    height: 520px;
+    right: -180px;
+    bottom: -350px;
+    border-radius: 50%;
+    border: 65px solid rgba(255, 255, 255, .07);
+}
+
+.eventa-hero-inner {
+    position: relative;
+    z-index: 1;
+}
+
+.eventa-hero-decoration {
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.eventa-decoration-one {
+    width: 210px;
+    height: 210px;
+    top: 5%;
+    right: 9%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .07);
+}
+
+.eventa-decoration-two {
+    width: 120px;
+    height: 120px;
+    right: 28%;
+    bottom: 3%;
+    border: 22px solid rgba(255, 255, 255, .06);
+    border-radius: 50%;
+}
+
+.eventa-decoration-three {
+    width: 90px;
+    height: 90px;
+    top: 30%;
+    right: 3%;
+    background-image: radial-gradient(rgba(255, 255, 255, .25) 2px, transparent 2px);
+    background-size: 15px 15px;
+}
+
+.eventa-hero-content {
+    max-width: 760px;
+    margin-bottom: 35px;
+}
+
+.eventa-tag {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #70F1F0;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.eventa-hero h1 {
+    max-width: 720px;
+    margin-bottom: 18px;
+    color: #FFFFFF;
+    font-size: clamp(2.5rem, 5vw, 4.3rem);
+    font-weight: 850;
+    line-height: 1.08;
+    letter-spacing: -2px;
+}
+
+.eventa-hero h1 span {
+    display: block;
+    color: #A5C9FF;
+}
+
+.eventa-hero p {
+    max-width: 570px;
+    margin: 0;
+    color: rgba(255, 255, 255, .85);
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* BUSCA SOBRE O BANNER */
+
+.eventa-hero-search {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr .85fr auto;
+    align-items: center;
+    gap: 0;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 14px;
+    background: #FFFFFF;
+    box-shadow: 0 15px 45px rgba(16, 24, 60, .22);
+}
+
+.eventa-search-field {
+    min-width: 0;
+    padding: 4px 18px;
+    border-right: 1px solid #E9EDF2;
+}
+
+.eventa-search-field label {
+    display: block;
+    margin-bottom: 5px;
+    color: #34445C;
+    font-size: .75rem;
+    font-weight: 750;
+}
+
+.eventa-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #6B7890;
+}
+
+.eventa-input-wrap input {
+    width: 100%;
+    min-width: 0;
+    padding: 3px 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: #263449;
+    font-family: inherit;
+    font-size: .88rem;
+}
+
+.eventa-input-wrap input::placeholder {
+    color: #9AA5B4;
+}
+
+.eventa-input-wrap input:focus {
+    outline: none;
+}
+
+.eventa-search-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 53px;
+    margin-left: 10px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 10px;
+    background: #39268F;
+    color: #FFFFFF;
+    font-size: .9rem;
+    font-weight: 750;
+    white-space: nowrap;
+    transition: .2s;
+}
+
+.eventa-search-submit:hover {
+    background: #27186F;
+    transform: translateY(-2px);
+}
+
+/* CONTEÚDO ABAIXO DO BANNER */
+
+.eventa-content {
+    padding-top: 35px;
+    padding-bottom: 65px;
+}
+
+/* FILTRO DE PERÍODO */
+
+.eventa-period-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 42px;
+}
+
+.eventa-period {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px;
+    border: 1px solid #E9EDF2;
+    border-radius: 16px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 12px rgba(23, 43, 77, .10);
+}
+
+.eventa-period-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
+    border-radius: 11px;
+    color: #34445C;
+    font-size: .95rem;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: .2s;
+}
+
+.eventa-period-btn:hover {
+    background: #FFF1E9;
+    color: var(--eventa-blue);
+}
+
+.eventa-period-btn.active {
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+}
+
+/* EVENTOS */
+
+.eventa-events-section {
+    scroll-margin-top: 25px;
+}
+
+.eventa-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 28px;
+}
+
+.eventa-section-label {
+    color: var(--eventa-blue);
+    font-size: .8rem;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.eventa-section-title {
+    margin: 7px 0 8px;
+    color: var(--eventa-navy);
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    font-weight: 850;
+    letter-spacing: -1px;
+}
+
+.eventa-section-description {
+    margin: 0;
+    color: #7A8799;
+    font-size: .95rem;
+}
+
+/* ESTADO VAZIO */
+
+.eventa-empty {
+    padding: 55px 20px;
+    border: 1px dashed #D5DFEA;
+    border-radius: 16px;
+    background: #F8FAFD;
+    text-align: center;
+}
+
+.eventa-empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 18px;
+    border-radius: 18px;
+    background: #EAF2FF;
+    color: var(--eventa-blue);
+    font-size: 1.7rem;
+}
+
+.eventa-empty h3 {
+    color: var(--eventa-navy);
+    font-size: 1.15rem;
+    font-weight: 700;
+}
+
+.eventa-empty p {
+    color: #7A8799;
+    margin-bottom: 0;
+}
+
+/* PAGINAÇÃO */
+
+.eventa-pagination .page-link {
+    color: var(--eventa-navy);
+    border-color: #E1E7EF;
+    border-radius: 8px;
+    margin: 0 3px;
+}
+
+.eventa-pagination .page-item.active .page-link {
+    background: var(--eventa-blue);
+    border-color: var(--eventa-blue);
+    color: #FFFFFF;
+}
+
+/* TABLETS */
+
+@media (max-width: 991px) {
+    .eventa-hero {
+        min-height: auto;
+        padding: 65px 0 45px;
+    }
+
+    .eventa-hero-search {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .eventa-search-field {
+        padding: 10px 12px;
+    }
+
+    .eventa-search-field:nth-child(2) {
+        border-right: 0;
+    }
+
+    .eventa-search-field:nth-child(3) {
+        border-top: 1px solid #E9EDF2;
+    }
+
+    .eventa-search-submit {
+        margin: 0;
+    }
+}
+
+/* CELULARES */
+
+@media (max-width: 576px) {
+    .eventa-hero {
+        padding: 52px 0 35px;
+    }
+
+    .eventa-hero-content {
+        margin-bottom: 27px;
+    }
+
+    .eventa-tag {
+        font-size: .76rem;
+    }
+
+    .eventa-hero h1 {
+        font-size: 2.45rem;
+        letter-spacing: -1.2px;
+    }
+
+    .eventa-hero p {
+        font-size: .95rem;
+    }
+
+    .eventa-hero-search {
+        grid-template-columns: 1fr;
+        padding: 10px 14px 14px;
+    }
+
+    .eventa-search-field,
+    .eventa-search-field:nth-child(2),
+    .eventa-search-field:nth-child(3) {
+        padding: 12px 4px;
+        border-right: 0;
+        border-bottom: 1px solid #E9EDF2;
+    }
+
+    .eventa-search-submit {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .eventa-content {
+        padding-top: 25px;
+    }
+
+    .eventa-period {
+        width: 100%;
+        justify-content: space-between;
+        gap: 2px;
+        padding: 4px;
+    }
+
+    .eventa-period-btn {
+        flex: 1;
+        min-height: 39px;
+        padding: 0 5px;
+        font-size: .76rem;
+    }
+
+    .eventa-section-heading {
+        margin-bottom: 22px;
+    }
+}

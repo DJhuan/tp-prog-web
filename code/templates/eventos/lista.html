@@ -1,55 +1,256 @@
-{% extends "base.html" %}
 
-{% block title %}Eventos disponíveis{% endblock %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Descubra eventos{% endblock %}
+
+{% block content_container_class %}p-0{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/eventos.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
-  <div>
-    <h1 class="h2 mb-1">Eventos disponíveis</h1>
-    <p class="text-body-secondary mb-0">Escolha um evento e garanta seu ingresso.</p>
-  </div>
 
-  <form method="get" class="d-flex flex-column flex-sm-row gap-2" role="search">
-    <input type="search" name="q" value="{{ busca }}" class="form-control" placeholder="Buscar por nome ou local" aria-label="Buscar">
-    <input type="date" name="data" value="{{ data_filtro }}" class="form-control" aria-label="A partir da data">
-    <button type="submit" class="btn btn-primary">Buscar</button>
-    {% if busca or data_filtro %}
-      <a href="{% url 'eventos:lista' %}" class="btn btn-outline-secondary">Limpar</a>
-    {% endif %}
-  </form>
+<div class="eventa-home">
+
+    <!-- BANNER PRINCIPAL -->
+    <section class="eventa-hero">
+
+        <div class="eventa-hero-decoration eventa-decoration-one"></div>
+        <div class="eventa-hero-decoration eventa-decoration-two"></div>
+        <div class="eventa-hero-decoration eventa-decoration-three"></div>
+
+        <div class="container eventa-hero-inner">
+
+            <div class="eventa-hero-content">
+
+                <span class="eventa-tag">
+                    ENCONTRE SUA PRÓXIMA EXPERIÊNCIA
+                </span>
+
+                <h1>
+                    Descubra e viva
+                    <span>novos eventos.</span>
+                </h1>
+
+                <p>
+                    Encontre experiências incríveis, conheça pessoas
+                    e participe de momentos que fazem a diferença.
+                </p>
+
+            </div>
+
+            <!-- BUSCA SOBRE O BANNER -->
+            <form method="get" class="eventa-hero-search" role="search">
+
+                <div class="eventa-search-field">
+                    <label for="busca-evento">Evento</label>
+                    <div class="eventa-input-wrap">
+                        <span aria-hidden="true">&#128269;</span>
+                        <input
+                            type="search"
+                            id="busca-evento"
+                            name="q"
+                            value="{{ busca }}"
+                            placeholder="Nome do evento"
+                        >
+                    </div>
+                </div>
+
+                <div class="eventa-search-field">
+                    <label for="busca-local">Localização</label>
+                    <div class="eventa-input-wrap">
+                        <span aria-hidden="true">&#128205;</span>
+                        <input
+                            type="search"
+                            id="busca-local"
+                            name="local"
+                            value="{{ local_filtro }}"
+                            placeholder="Cidade ou local"
+                        >
+                    </div>
+                </div>
+
+                <div class="eventa-search-field">
+                    <label for="busca-data">Data</label>
+                    <div class="eventa-input-wrap">
+                        <span aria-hidden="true">&#128197;</span>
+                        <input
+                            type="date"
+                            id="busca-data"
+                            name="data"
+                            value="{{ data_filtro }}"
+                        >
+                    </div>
+                </div>
+
+                {% if periodo %}
+                    <input type="hidden" name="periodo" value="{{ periodo }}">
+                {% endif %}
+
+                <button type="submit" class="eventa-search-submit">
+                    Buscar eventos
+                    <span aria-hidden="true">&rarr;</span>
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <!-- CONTEÚDO -->
+    <div class="container eventa-content">
+
+        <!-- FILTRO POR PERÍODO -->
+        <section class="eventa-period-wrapper" aria-label="Filtrar por período">
+
+            <div class="eventa-period">
+
+                <a
+                    href="{% url 'eventos:lista' %}"
+                    class="eventa-period-btn {% if not periodo %}active{% endif %}"
+                >
+                    Todos
+                </a>
+
+                <a
+                    href="?periodo=hoje"
+                    class="eventa-period-btn {% if periodo == 'hoje' %}active{% endif %}"
+                >
+                    Hoje
+                </a>
+
+                <a
+                    href="?periodo=amanha"
+                    class="eventa-period-btn {% if periodo == 'amanha' %}active{% endif %}"
+                >
+                    Amanhã
+                </a>
+
+                <a
+                    href="?periodo=semana"
+                    class="eventa-period-btn {% if periodo == 'semana' %}active{% endif %}"
+                >
+                    Esta semana
+                </a>
+
+            </div>
+
+        </section>
+
+        <!-- EVENTOS EM DESTAQUE -->
+        <section id="eventos" class="eventa-events-section">
+
+            <div class="eventa-section-heading">
+
+                <div>
+                    <span class="eventa-section-label">
+                        NÃO FIQUE DE FORA
+                    </span>
+
+                    <h2 class="eventa-section-title">
+                        {% if periodo == 'hoje' %}
+                            Eventos de hoje
+                        {% elif periodo == 'amanha' %}
+                            Eventos de amanhã
+                        {% elif periodo == 'semana' %}
+                            Eventos desta semana
+                        {% elif busca or local_filtro or data_filtro %}
+                            Resultados da busca
+                        {% else %}
+                            Próximos eventos
+                        {% endif %}
+                    </h2>
+
+                    <p class="eventa-section-description">
+                        Encontre seu próximo evento e prepare-se para viver algo novo.
+                    </p>
+                </div>
+
+            </div>
+
+            {% if eventos %}
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+
+                    {% for evento in eventos %}
+                        <div class="col">
+                            {% include "includes/card_evento.html" with evento=evento %}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+                {% if is_paginated %}
+                    <nav class="eventa-pagination mt-5" aria-label="Paginação">
+
+                        <ul class="pagination justify-content-center flex-wrap">
+
+                            {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ page_obj.previous_page_number }}{% if periodo %}&periodo={{ periodo }}{% endif %}{% if busca %}&q={{ busca|urlencode }}{% endif %}{% if local_filtro %}&local={{ local_filtro|urlencode }}{% endif %}{% if data_filtro %}&data={{ data_filtro }}{% endif %}"
+                                    >
+                                        Anterior
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                                </span>
+                            </li>
+
+                            {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a
+                                        class="page-link"
+                                        href="?page={{ page_obj.next_page_number }}{% if periodo %}&periodo={{ periodo }}{% endif %}{% if busca %}&q={{ busca|urlencode }}{% endif %}{% if local_filtro %}&local={{ local_filtro|urlencode }}{% endif %}{% if data_filtro %}&data={{ data_filtro }}{% endif %}"
+                                    >
+                                        Próxima
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                        </ul>
+
+                    </nav>
+                {% endif %}
+
+            {% else %}
+
+                <div class="eventa-empty">
+
+                    <div class="eventa-empty-icon">
+                        &#128197;
+                    </div>
+
+                    <h3>Nenhum evento encontrado</h3>
+
+                    <p>
+                        Não encontramos eventos com esses critérios.
+                        Experimente alterar sua busca.
+                    </p>
+
+                    <a
+                        href="{% url 'eventos:lista' %}"
+                        class="btn btn-primary mt-3"
+                    >
+                        Ver todos os eventos
+                    </a>
+
+                </div>
+
+            {% endif %}
+
+        </section>
+
+    </div>
+
 </div>
 
-{% if eventos %}
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
-    {% for evento in eventos %}
-      <div class="col">{% include "includes/card_evento.html" with evento=evento %}</div>
-    {% endfor %}
-  </div>
-
-  {% if is_paginated %}
-    <nav class="mt-4" aria-label="Paginação">
-      <ul class="pagination justify-content-center">
-        {% if page_obj.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if busca %}&q={{ busca|urlencode }}{% endif %}{% if data_filtro %}&data={{ data_filtro }}{% endif %}">Anterior</a>
-          </li>
-        {% endif %}
-        <li class="page-item disabled"><span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span></li>
-        {% if page_obj.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if busca %}&q={{ busca|urlencode }}{% endif %}{% if data_filtro %}&data={{ data_filtro }}{% endif %}">Próxima</a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
-  {% endif %}
-{% else %}
-  <div class="text-center py-5 text-body-secondary">
-    {% if busca or data_filtro %}
-      Nenhum evento encontrado para essa busca.
-    {% else %}
-      Nenhum evento disponível no momento.
-    {% endif %}
-  </div>
-{% endif %}
 {% endblock %}
