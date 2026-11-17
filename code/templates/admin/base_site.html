@@ -9,9 +9,19 @@
     <link rel="stylesheet"
           href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
 
-    <!-- Personalização EVENTA -->
+    <!-- Estilos principais do EVENTA -->
+    <link rel="stylesheet"
+          href="{% static 'css/admin.css' %}">
+
+    <!-- Ajustes complementares do Admin -->
     <link rel="stylesheet"
           href="{% static 'css/admin-custom.css' %}">
+    
+    <!-- Biblioteca de ícones Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
 
 {% endblock %}
 
@@ -78,7 +88,7 @@
 
                 <a href="{% url 'admin:index' %}"
                    class="eventa-menu-item {% if request.path == '/admin/' %}active{% endif %}">
-                    <span class="eventa-menu-icon">⌂</span>
+                    <i class="fas fa-home eventa-menu-icon"></i>
                     <span>Visão geral</span>
                 </a>
 
@@ -89,15 +99,15 @@
                         {% for model in app.models %}
                             {% if model.admin_url %}
                                 <a href="{{ model.admin_url }}" class="eventa-menu-item">
-                                    <span class="eventa-menu-icon">
-                                        {% if model.object_name == "Usuario" %}♙
-                                        {% elif model.object_name == "Produtora" %}▦
-                                        {% elif model.object_name == "Evento" %}▣
-                                        {% elif model.object_name == "TipoIngresso" %}◇
-                                        {% elif model.object_name == "Pedido" %}▤
-                                        {% elif model.object_name == "Ingresso" %}▧
-                                        {% else %}○{% endif %}
-                                    </span>
+                                    <i class="eventa-menu-icon
+                                        {% if model.object_name == 'Usuario' %}fas fa-users
+                                        {% elif model.object_name == 'Produtora' %}fas fa-building
+                                        {% elif model.object_name == 'Evento' %}fas fa-calendar-alt
+                                        {% elif model.object_name == 'TipoIngresso' %}fas fa-ticket-alt
+                                        {% elif model.object_name == 'Pedido' %}fas fa-receipt
+                                        {% elif model.object_name == 'Ingresso' %}fas fa-ticket-alt
+                                        {% else %}fas fa-circle{% endif %}">
+                                    </i>
                                     <span>{{ model.name }}</span>
                                 </a>
                             {% endif %}
