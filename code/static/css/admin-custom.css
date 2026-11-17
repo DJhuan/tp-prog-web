@@ -494,20 +494,30 @@ html[data-theme="dark"] .eventa-brand a {
 }
 
 /* Ícones dos indicadores */
-.dashboard-icon {
+/* Ícones dos indicadores do dashboard */
+.dashboard-card .dashboard-icon {
     width: 42px;
     height: 42px;
+    min-width: 42px;
     flex-shrink: 0;
 
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+
+    margin: 0 0 0 auto;
+    padding: 0;
 
     background: rgba(59, 130, 246, .10);
     color: var(--eventa-blue);
 
+    border: 0;
     border-radius: 11px;
-    font-size: 19px;
+
+    font-size: 18px;
+    line-height: 1;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 /* Card de boas-vindas */
@@ -1132,5 +1142,440 @@ html[data-theme="dark"] .form-row textarea {
 
     .submit-row input {
         width: 100%;
+    }
+}
+
+/* =====================================================
+   LISTAGENS DO ADMIN EVENTA
+===================================================== */
+
+/* Área principal */
+#changelist {
+    background: transparent !important;
+}
+
+/* Barra de pesquisa */
+#changelist #toolbar {
+    padding: 16px !important;
+    margin-bottom: 18px;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+#changelist #toolbar form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#changelist #toolbar input[type="text"] {
+    min-height: 42px;
+    padding: 10px 14px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 8px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+/* Botão pesquisar */
+#changelist #toolbar input[type="submit"] {
+    min-height: 42px;
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--eventa-blue);
+    color: #fff;
+}
+
+/* Área de resultados */
+#changelist .results {
+    overflow: hidden;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+/* Contador de registros */
+#changelist .paginator {
+    margin-top: 16px;
+    padding: 14px 18px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-muted);
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 9px;
+
+    font-size: 12px;
+}
+
+/* Cabeçalho da listagem */
+#content-main {
+    min-width: 0;
+}
+
+#changelist-form {
+    min-width: 0;
+}
+
+/* Botão adicionar */
+.object-tools a {
+    border-radius: 8px !important;
+}
+
+/* =====================================================
+   AJUSTES FINOS DAS TELAS DO ADMIN
+===================================================== */
+
+/* Logo EVENTA no cabeçalho */
+#header .eventa-brand a {
+    color: #172B4D !important;
+    text-decoration: none !important;
+}
+
+#header .eventa-brand a span:last-child {
+    color: #172B4D !important;
+    opacity: 1 !important;
+}
+
+html[data-theme="dark"] #header .eventa-brand a,
+html[data-theme="dark"] #header .eventa-brand a span:last-child {
+    color: #FFFFFF !important;
+}
+
+/* Contador de registros */
+#changelist .paginator {
+    display: block;
+    margin: 16px 0 0;
+    padding: 12px 16px;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-top: 1px solid var(--eventa-border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    color: var(--eventa-muted) !important;
+    font-size: 12px;
+}
+
+/* Remove aparência de botão do contador */
+#changelist .paginator a,
+#changelist .paginator span,
+#changelist .paginator .this-page {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: var(--eventa-muted) !important;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   EVENTA | REFINAMENTO DAS TELAS DE LISTAGEM
+===================================================== */
+
+/* 1. ESTRUTURA DA LISTAGEM */
+
+#changelist {
+    display: flow-root;
+    width: 100%;
+    color: var(--eventa-text);
+}
+
+#changelist-form {
+    min-width: 0;
+}
+
+#changelist .results {
+    overflow-x: auto;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px !important;
+    background: var(--eventa-surface) !important;
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+/* 2. FILTROS LATERAIS */
+
+#changelist-filter {
+    box-sizing: border-box;
+    width: 220px;
+    margin-left: 18px;
+    padding: 14px !important;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px !important;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+#changelist-filter h2 {
+    margin: 0 0 14px;
+    padding: 12px 14px !important;
+
+    background: var(--eventa-navy) !important;
+    color: #FFFFFF !important;
+
+    border-radius: 8px;
+    font-size: 12px !important;
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+#changelist-filter h3 {
+    margin: 18px 0 8px;
+    padding: 0;
+
+    color: var(--eventa-text);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#changelist-filter ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#changelist-filter li {
+    margin: 3px 0;
+    padding: 0;
+    font-size: 12px;
+}
+
+#changelist-filter a {
+    display: block;
+    padding: 7px 9px;
+
+    color: var(--eventa-muted) !important;
+    border-radius: 6px;
+    text-decoration: none !important;
+
+    transition: background .2s, color .2s;
+}
+
+#changelist-filter a:hover {
+    background: rgba(59, 130, 246, .08);
+    color: var(--eventa-blue) !important;
+}
+
+#changelist-filter li.selected {
+    border-left: 3px solid var(--eventa-blue);
+}
+
+#changelist-filter li.selected a {
+    background: rgba(59, 130, 246, .08);
+    color: var(--eventa-blue) !important;
+    font-weight: 700;
+}
+
+/* 3. BARRA DE AÇÕES EM MASSA */
+
+#changelist .actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin: 0 0 16px;
+    padding: 14px 16px !important;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 10px !important;
+}
+
+#changelist .actions label {
+    color: var(--eventa-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#changelist .actions select {
+    min-height: 38px;
+    padding: 7px 32px 7px 10px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 7px;
+
+    background-color: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    font-size: 12px;
+}
+
+#changelist .actions button {
+    min-height: 38px;
+    padding: 8px 17px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#changelist .actions button:hover {
+    background: var(--eventa-blue-hover);
+}
+
+#changelist .actions .action-counter {
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+/* 4. TABELA DE REGISTROS */
+
+#result_list {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--eventa-surface);
+}
+
+#result_list thead th {
+    padding: 14px 15px;
+
+    background: #EDF2FA !important;
+    color: var(--eventa-navy) !important;
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .35px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+#result_list thead th a {
+    color: var(--eventa-navy) !important;
+    text-decoration: none !important;
+}
+
+#result_list tbody td,
+#result_list tbody th {
+    padding: 14px 15px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+#result_list tbody tr:last-child td,
+#result_list tbody tr:last-child th {
+    border-bottom: 0;
+}
+
+#result_list tbody tr:hover td,
+#result_list tbody tr:hover th {
+    background: #F5F8FD;
+}
+
+#result_list tbody th a,
+#result_list tbody td a {
+    color: var(--eventa-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+#result_list tbody th a:hover,
+#result_list tbody td a:hover {
+    text-decoration: underline;
+}
+
+/* 5. CONTADOR E PAGINAÇÃO */
+
+#changelist .paginator {
+    display: block;
+    margin: 14px 0 0;
+    padding: 13px 16px;
+
+    background: transparent !important;
+    color: var(--eventa-muted) !important;
+
+    border: 0 !important;
+    border-top: 1px solid var(--eventa-border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    font-size: 12px;
+}
+
+#changelist .paginator a,
+#changelist .paginator .this-page {
+    color: var(--eventa-blue) !important;
+    background: transparent !important;
+    border: 0 !important;
+    text-decoration: none;
+}
+
+/* 6. TEMA ESCURO */
+
+html[data-theme="dark"] #changelist-filter,
+html[data-theme="dark"] #changelist .actions {
+    background: var(--eventa-surface) !important;
+    border-color: var(--eventa-border) !important;
+}
+
+html[data-theme="dark"] #changelist-filter h3,
+html[data-theme="dark"] #changelist .actions label {
+    color: var(--eventa-text);
+}
+
+html[data-theme="dark"] #result_list thead th {
+    background: #26364D !important;
+    color: #E5E7EB !important;
+}
+
+html[data-theme="dark"] #result_list thead th a {
+    color: #E5E7EB !important;
+}
+
+html[data-theme="dark"] #result_list tbody tr:hover td,
+html[data-theme="dark"] #result_list tbody tr:hover th {
+    background: #26364D;
+}
+
+html[data-theme="dark"] #changelist-filter a:hover,
+html[data-theme="dark"] #changelist-filter li.selected a {
+    background: #26364D;
+}
+
+/* 7. RESPONSIVIDADE */
+
+@media (max-width: 767px) {
+    #changelist-filter {
+        float: none;
+        width: 100%;
+        margin: 16px 0;
+    }
+
+    #changelist .actions {
+        align-items: stretch;
+    }
+
+    #changelist .results {
+        max-width: 100%;
     }
 }
