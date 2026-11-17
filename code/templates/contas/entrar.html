@@ -1,34 +1,71 @@
-{% extends "base.html" %}
 
-{% block title %}Entrar{% endblock %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Entrar | EVENTA{% endblock %}
+{% block content_container_class %}container-fluid p-0{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/entrar.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-12 col-sm-10 col-md-7 col-lg-5">
-    <div class="card shadow-sm">
-      <div class="card-body p-4">
-        <h1 class="h3 mb-1">Entrar</h1>
-        <p class="text-body-secondary mb-4">Acesse sua conta para comprar e ver seus ingressos.</p>
+<div class="login-page">
 
-        {% if form.non_field_errors %}
-          <div class="alert alert-danger">
-            {% for erro in form.non_field_errors %}{{ erro }}{% endfor %}
-          </div>
-        {% endif %}
+  <div class="login-card">
 
-        <form method="post" novalidate>
-          {% csrf_token %}
-          <input type="hidden" name="next" value="{{ next }}">
-          {% include "includes/campo_form.html" with campo=form.username %}
-          {% include "includes/campo_form.html" with campo=form.password %}
-          <button type="submit" class="btn btn-primary w-100">Entrar</button>
-        </form>
+    <div class="login-cabecalho">
 
-        <p class="text-center mt-3 mb-0">
-          Ainda não tem conta? <a href="{% url 'contas:cadastrar' %}">Cadastre-se</a>
-        </p>
-      </div>
+      <div class="login-logo">E</div>
+
+      <span class="login-boas-vindas">BEM-VINDO DE VOLTA</span>
+
+      <h1>Que bom ter você aqui!</h1>
+
+      <p>
+        Entre na sua conta para descobrir eventos e garantir seus ingressos.
+      </p>
+
     </div>
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger login-alerta">
+        {% for erro in form.non_field_errors %}
+          {{ erro }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <input type="hidden" name="next" value="{{ next }}">
+
+      <div class="login-campos">
+        {% include "includes/campo_form.html" with campo=form.username %}
+        {% include "includes/campo_form.html" with campo=form.password %}
+      </div>
+
+      <button type="submit" class="login-botao">
+        Entrar na minha conta
+        <span>→</span>
+      </button>
+
+    </form>
+
+    <div class="login-divisor">
+      <span>AINDA NÃO TEM CONTA?</span>
+    </div>
+
+    <a href="{% url 'contas:cadastrar' %}" class="login-cadastro">
+      Criar minha conta
+    </a>
+
   </div>
+
+  <p class="login-rodape">
+    Sua próxima experiência começa aqui. ✦
+  </p>
+
 </div>
 {% endblock %}

@@ -1,0 +1,274 @@
+
+.evento-detalhe {
+  --evento-roxo: #685BC7;
+  --evento-roxo-escuro: #5144ad;
+  color: #242238;
+}
+
+/* Banner */
+
+.evento-banner {
+  position: relative;
+  min-height: 300px;
+  max-height: 440px;
+  border-radius: 22px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #685BC7, #9b8eea);
+}
+
+.evento-banner img {
+  width: 100%;
+  height: 100%;
+  min-height: 300px;
+  max-height: 440px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Conteúdo */
+
+.evento-conteudo {
+  margin-top: 32px;
+}
+
+.evento-categoria {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 13px;
+  border-radius: 30px;
+  background: #f0edff;
+  color: var(--evento-roxo-escuro);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.evento-titulo {
+  margin: 15px 0 20px;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1.15;
+}
+
+/* Informações */
+
+.evento-infos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.evento-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 17px;
+  background: #fff;
+  border: 1px solid #eeedf4;
+  border-radius: 14px;
+}
+
+.evento-info-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #f0edff;
+  color: var(--evento-roxo);
+  font-size: 1.15rem;
+}
+
+.evento-info-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #858397;
+  font-size: .76rem;
+  font-weight: 600;
+}
+
+.evento-info-valor {
+  display: block;
+  color: #302e43;
+  font-size: .92rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Sobre o evento */
+
+.evento-sobre {
+  padding: 26px;
+  background: #fff;
+  border: 1px solid #eeedf4;
+  border-radius: 18px;
+}
+
+.evento-secao-titulo {
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.evento-descricao {
+  color: #69677b;
+  font-size: .96rem;
+  line-height: 1.8;
+}
+
+/* Card de ingressos */
+
+.ingressos-card {
+  position: sticky;
+  top: 24px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid #eeedf4;
+  border-radius: 20px;
+  box-shadow: 0 12px 40px rgba(40, 34, 90, .07);
+}
+
+.ingressos-cabecalho {
+  padding: 24px 24px 20px;
+  background: linear-gradient(135deg, #f4f1ff, #faf9ff);
+  border-bottom: 1px solid #eeedf4;
+}
+
+.ingressos-cabecalho h2 {
+  margin: 0 0 5px;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.ingressos-cabecalho p {
+  margin: 0;
+  color: #858397;
+  font-size: .85rem;
+}
+
+.ingressos-corpo {
+  padding: 8px 24px 22px;
+}
+
+/* Tipos de ingresso */
+
+.ingresso-item {
+  padding: 20px 0;
+  border-bottom: 1px solid #eeedf4;
+}
+
+.ingresso-item:last-child {
+  border-bottom: 0;
+}
+
+.ingresso-nome {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  font-weight: 750;
+}
+
+.ingresso-descricao {
+  margin-bottom: 8px;
+  color: #858397;
+  font-size: .82rem;
+  line-height: 1.5;
+}
+
+.ingresso-disponibilidade {
+  color: #24875b;
+  font-size: .78rem;
+  font-weight: 650;
+}
+
+.ingresso-esgotado {
+  color: #d34e5d;
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.ingresso-preco {
+  margin-bottom: 12px;
+  color: #302e43;
+  font-size: 1.15rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+/* Formulário de compra */
+
+.ingresso-formulario {
+  display: flex;
+  gap: 7px;
+}
+
+.ingresso-formulario input {
+  width: 68px;
+  min-width: 68px;
+  border-color: #e5e3ed;
+  border-radius: 9px;
+}
+
+.ingresso-formulario button {
+  border: 0;
+  border-radius: 9px;
+  background: var(--evento-roxo);
+  font-weight: 650;
+  transition: .2s ease;
+}
+
+.ingresso-formulario button:hover {
+  background: var(--evento-roxo-escuro);
+  transform: translateY(-1px);
+}
+
+/* Estado vazio */
+
+.ingressos-vazio {
+  padding: 28px 12px;
+  color: #858397;
+  text-align: center;
+  font-size: .9rem;
+}
+
+/* Responsividade */
+
+@media (max-width: 767px) {
+  .evento-banner {
+    min-height: 190px;
+    max-height: 240px;
+  }
+
+  .evento-banner img {
+    min-height: 190px;
+    max-height: 240px;
+  }
+
+  .evento-conteudo {
+    margin-top: 24px;
+  }
+
+  .evento-infos {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .evento-sobre {
+    padding: 20px;
+  }
+
+  .ingressos-card {
+    position: static;
+  }
+
+  .ingressos-cabecalho,
+  .ingressos-corpo {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}

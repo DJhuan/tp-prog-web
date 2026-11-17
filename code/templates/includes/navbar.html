@@ -1,47 +1,124 @@
-<nav class="navbar navbar-expand-lg border-bottom">
+
+<nav class="navbar navbar-expand-lg eventa-navbar">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="{% url 'eventos:lista' %}">EVENTA</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu-principal"
-            aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+
+    <!-- Logo -->
+    <a class="navbar-brand eventa-brand" href="{% url 'eventos:lista' %}">
+      <span class="eventa-brand-icone">E</span>
+      <span>EVENTA</span>
+    </a>
+
+    <!-- Botão mobile -->
+    <button
+      class="navbar-toggler eventa-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#menu-principal"
+      aria-controls="menu-principal"
+      aria-expanded="false"
+      aria-label="Abrir menu"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="menu-principal">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'eventos:lista' %}">Eventos</a></li>
+
+      <!-- Links principais -->
+      <ul class="navbar-nav me-auto eventa-nav-links">
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'eventos:lista' %}">
+            Eventos
+          </a>
+        </li>
+
         {% if user.is_authenticated %}
+
           {% if user.perfil == "ADMINISTRADOR" or user.perfil == "VENDEDOR" %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Administração</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'admin:index' %}">
+                Administração
+              </a>
+            </li>
           {% endif %}
+
           {% if user.perfil == "PARTICIPANTE" %}
-            <li class="nav-item"><a class="nav-link" href="{% url 'ingressos:meus_ingressos' %}">Meus ingressos</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ingressos:meus_ingressos' %}">
+                Meus ingressos
+              </a>
+            </li>
           {% endif %}
+
         {% endif %}
+
         {% if not user.is_authenticated or user.perfil == "PARTICIPANTE" %}
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'ingressos:carrinho' %}">
-              Carrinho{% if carrinho_quantidade %} <span class="badge text-bg-primary rounded-pill">{{ carrinho_quantidade }}</span>{% endif %}
+            <a class="nav-link eventa-carrinho-link" href="{% url 'ingressos:carrinho' %}">
+              Carrinho
+
+              {% if carrinho_quantidade %}
+                <span class="eventa-carrinho-badge">
+                  {{ carrinho_quantidade }}
+                </span>
+              {% endif %}
             </a>
           </li>
         {% endif %}
+
       </ul>
 
-      <ul class="navbar-nav align-items-lg-center gap-lg-2">
+      <!-- Área do usuário -->
+      <ul class="navbar-nav align-items-lg-center eventa-nav-acoes">
+
         {% if user.is_authenticated %}
+
           <li class="nav-item">
-            <span class="navbar-text">{{ user.first_name|default:user.email }} · {{ user.get_perfil_display }}</span>
+            <div class="eventa-usuario">
+              <div class="eventa-avatar">
+                {{ user.first_name|default:user.email|first|upper }}
+              </div>
+
+              <div class="eventa-usuario-info">
+                <span class="eventa-usuario-nome">
+                  {{ user.first_name|default:user.email }}
+                </span>
+                <span class="eventa-usuario-perfil">
+                  {{ user.get_perfil_display }}
+                </span>
+              </div>
+            </div>
           </li>
+
           <li class="nav-item">
-            <form method="post" action="{% url 'contas:sair' %}" class="d-inline">
+            <form method="post" action="{% url 'contas:sair' %}">
               {% csrf_token %}
-              <button type="submit" class="btn btn-outline-secondary btn-sm">Sair</button>
+              <button type="submit" class="eventa-botao-sair">
+                Sair
+              </button>
             </form>
           </li>
+
         {% else %}
-          <li class="nav-item"><a class="nav-link" href="{% url 'contas:entrar' %}">Entrar</a></li>
-          <li class="nav-item"><a class="btn btn-primary btn-sm" href="{% url 'contas:cadastrar' %}">Cadastre-se</a></li>
+
+          <li class="nav-item">
+            <a class="eventa-login" href="{% url 'contas:entrar' %}">
+              Entrar
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="eventa-cadastro" href="{% url 'contas:cadastrar' %}">
+              Criar conta
+              <span>→</span>
+            </a>
+          </li>
+
         {% endif %}
+
       </ul>
+
     </div>
   </div>
 </nav>
+

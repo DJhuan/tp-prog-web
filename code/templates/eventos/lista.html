@@ -103,43 +103,6 @@
     <!-- CONTEÚDO -->
     <div class="container eventa-content">
 
-        <!-- FILTRO POR PERÍODO -->
-        <section class="eventa-period-wrapper" aria-label="Filtrar por período">
-
-            <div class="eventa-period">
-
-                <a
-                    href="{% url 'eventos:lista' %}"
-                    class="eventa-period-btn {% if not periodo %}active{% endif %}"
-                >
-                    Todos
-                </a>
-
-                <a
-                    href="?periodo=hoje"
-                    class="eventa-period-btn {% if periodo == 'hoje' %}active{% endif %}"
-                >
-                    Hoje
-                </a>
-
-                <a
-                    href="?periodo=amanha"
-                    class="eventa-period-btn {% if periodo == 'amanha' %}active{% endif %}"
-                >
-                    Amanhã
-                </a>
-
-                <a
-                    href="?periodo=semana"
-                    class="eventa-period-btn {% if periodo == 'semana' %}active{% endif %}"
-                >
-                    Esta semana
-                </a>
-
-            </div>
-
-        </section>
-
         <!-- EVENTOS EM DESTAQUE -->
         <section id="eventos" class="eventa-events-section">
 

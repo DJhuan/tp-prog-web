@@ -1,58 +1,165 @@
+
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{{ evento.nome }}{% endblock %}
+{% block title %}{{ evento.nome }} | EVENTA{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/evento_detalhe.css' %}">
+{% endblock %}
 
 {% block content %}
-<div class="mb-4 rounded overflow-hidden">
-  <img src="{% if evento.banner %}{{ evento.banner.url }}{% elif evento.foto %}{{ evento.foto.url }}{% else %}{% static 'img/evento-padrao.svg' %}{% endif %}"
-       class="w-100 object-fit-cover" style="aspect-ratio: 16 / 5;" alt="Banner do evento {{ evento.nome }}">
-</div>
+<div class="evento-detalhe">
 
-<div class="row g-4">
-  <div class="col-lg-7">
-    <h1 class="h2">{{ evento.nome }}</h1>
-    <ul class="list-unstyled text-body-secondary mb-4">
-      <li><strong>Data:</strong> {{ evento.data|date:"l, d \d\e F \d\e Y" }} às {{ evento.horario|time:"H:i" }}</li>
-      <li><strong>Local:</strong> {{ evento.local }}</li>
-      <li><strong>Produtora:</strong> {{ evento.produtora.nome }}</li>
-    </ul>
-    {% if evento.descricao %}
-      <h2 class="h5">Sobre o evento</h2>
-      <p>{{ evento.descricao|linebreaksbr }}</p>
-    {% endif %}
+  <!-- Banner -->
+  <div class="evento-banner">
+    <img
+      src="{% if evento.banner %}{{ evento.banner.url }}{% elif evento.foto %}{{ evento.foto.url }}{% else %}{% static 'img/evento-padrao.svg' %}{% endif %}"
+      alt="Banner do evento {{ evento.nome }}"
+    >
   </div>
 
-  <div class="col-lg-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h2 class="h5 mb-3">Ingressos</h2>
-        {% for tipo in tipos_ingresso %}
-          <div class="d-flex justify-content-between align-items-start py-2 {% if not forloop.last %}border-bottom{% endif %}">
-            <div>
-              <div class="fw-semibold">{{ tipo.nome }}</div>
-              {% if tipo.descricao %}<div class="small text-body-secondary">{{ tipo.descricao }}</div>{% endif %}
-              <div class="small {% if tipo.disponiveis %}text-body-secondary{% else %}text-danger{% endif %}">
-                {% if tipo.disponiveis %}{{ tipo.disponiveis }} disponíveis{% else %}Esgotado{% endif %}
+  <div class="row g-4 evento-conteudo">
+
+    <!-- Informações do evento -->
+    <div class="col-lg-7">
+
+      <span class="evento-categoria">EVENTA · EXPERIÊNCIAS</span>
+
+      <h1 class="evento-titulo">{{ evento.nome }}</h1>
+
+      <div class="evento-infos">
+
+        <div class="evento-info">
+          <div class="evento-info-icone">📅</div>
+          <div>
+            <span class="evento-info-label">Data e horário</span>
+            <span class="evento-info-valor">
+              {{ evento.data|date:"l, d \d\e F \d\e Y" }}
+              <br>
+              às {{ evento.horario|time:"H:i" }}
+            </span>
+          </div>
+        </div>
+
+        <div class="evento-info">
+          <div class="evento-info-icone">📍</div>
+          <div>
+            <span class="evento-info-label">Local</span>
+            <span class="evento-info-valor">{{ evento.local }}</span>
+          </div>
+        </div>
+
+        <div class="evento-info">
+          <div class="evento-info-icone">🎟️</div>
+          <div>
+            <span class="evento-info-label">Ingressos</span>
+            <span class="evento-info-valor">Confira as opções disponíveis</span>
+          </div>
+        </div>
+
+        <div class="evento-info">
+          <div class="evento-info-icone">✦</div>
+          <div>
+            <span class="evento-info-label">Organização</span>
+            <span class="evento-info-valor">{{ evento.produtora.nome }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      {% if evento.descricao %}
+        <section class="evento-sobre">
+          <h2 class="evento-secao-titulo">Sobre o evento</h2>
+          <div class="evento-descricao">
+            {{ evento.descricao|linebreaksbr }}
+          </div>
+        </section>
+      {% endif %}
+
+    </div>
+
+    <!-- Compra de ingressos -->
+    <div class="col-lg-5">
+
+      <aside class="ingressos-card">
+
+        <div class="ingressos-cabecalho">
+          <h2>Garanta seu ingresso</h2>
+          <p>Escolha a opção ideal para você.</p>
+        </div>
+
+        <div class="ingressos-corpo">
+
+          {% for tipo in tipos_ingresso %}
+            <div class="ingresso-item">
+
+              <div class="d-flex justify-content-between align-items-start gap-3">
+
+                <div class="flex-grow-1">
+                  <div class="ingresso-nome">{{ tipo.nome }}</div>
+
+                  {% if tipo.descricao %}
+                    <p class="ingresso-descricao">{{ tipo.descricao }}</p>
+                  {% endif %}
+
+                  {% if tipo.disponiveis %}
+                    <span class="ingresso-disponibilidade">
+                      ● {{ tipo.disponiveis }} disponíveis
+                    </span>
+                  {% else %}
+                    <span class="ingresso-esgotado">
+                      ● Ingresso esgotado
+                    </span>
+                  {% endif %}
+                </div>
+
+                <div class="text-end">
+                  <div class="ingresso-preco">
+                    R$ {{ tipo.preco|floatformat:2 }}
+                  </div>
+
+                  {% if tipo.disponiveis %}
+                    <form
+                      method="post"
+                      action="{% url 'ingressos:carrinho_adicionar' tipo.pk %}"
+                      class="ingresso-formulario"
+                    >
+                      {% csrf_token %}
+
+                      <input
+                        type="number"
+                        name="quantidade"
+                        value="1"
+                        min="1"
+                        max="{{ tipo.disponiveis }}"
+                        class="form-control form-control-sm"
+                        aria-label="Quantidade de {{ tipo.nome }}"
+                      >
+
+                      <button type="submit" class="btn btn-primary btn-sm text-nowrap">
+                        Adicionar
+                      </button>
+                    </form>
+                  {% endif %}
+                </div>
+
               </div>
             </div>
-            <div class="text-end ms-3">
-              <div class="fw-semibold text-nowrap">R$ {{ tipo.preco|floatformat:2 }}</div>
-              {% if tipo.disponiveis %}
-                <form method="post" action="{% url 'ingressos:carrinho_adicionar' tipo.pk %}" class="d-flex gap-1 mt-1">
-                  {% csrf_token %}
-                  <input type="number" name="quantidade" value="1" min="1" max="{{ tipo.disponiveis }}"
-                         class="form-control form-control-sm" style="width: 4.5rem;" aria-label="Quantidade de {{ tipo.nome }}">
-                  <button type="submit" class="btn btn-primary btn-sm text-nowrap">Adicionar</button>
-                </form>
-              {% endif %}
+
+          {% empty %}
+            <div class="ingressos-vazio">
+              <div class="fs-2 mb-2">🎫</div>
+              <strong>Nenhum ingresso disponível ainda</strong>
+              <p class="mb-0 mt-2">Fique de olho! As vendas podem começar em breve.</p>
             </div>
-          </div>
-        {% empty %}
-          <p class="text-body-secondary mb-0">Os ingressos deste evento ainda não estão à venda.</p>
-        {% endfor %}
-      </div>
+          {% endfor %}
+
+        </div>
+      </aside>
+
     </div>
   </div>
 </div>
 {% endblock %}
+
