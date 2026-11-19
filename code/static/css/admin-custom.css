@@ -2615,3 +2615,135 @@ html[data-theme="dark"] .dash-kpi-icon.orange {
     }
 }
 
+/* Login administrativo com a mesma identidade visual do login publico. */
+body.login #container {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    background: var(--eventa-page);
+}
+
+body.login {
+    color-scheme: light;
+    --eventa-page: #FAF9FF;
+    --eventa-surface: #FFFFFF;
+    --eventa-surface-soft: #FCFBFF;
+    --eventa-surface-muted: #F8FAFD;
+    --eventa-text: #29263E;
+    --eventa-text-strong: #302E43;
+    --eventa-muted: #858397;
+    --eventa-border: #EEEDF5;
+    --eventa-border-soft: #E5E3ED;
+    --eventa-divider: #E9EDF3;
+    --eventa-primary: #685BC7;
+    --eventa-primary-dark: #5144AD;
+    --eventa-primary-soft: #F0EDFF;
+}
+
+body.login #header {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: var(--eventa-header-height);
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px clamp(16px, 4vw, 32px);
+}
+
+body.login #branding {
+    flex: 1 1 180px;
+}
+
+body.login .eventa-breadcrumb {
+    display: none;
+}
+
+body.login .main {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: stretch;
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--eventa-page);
+}
+
+body.login .main > main.content {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+body.login #content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    overflow-wrap: anywhere;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.login .eventa-admin-login {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - 150px);
+    min-height: calc(100svh - 150px);
+    margin: 0 auto;
+    padding: 45px 20px;
+    background:
+        radial-gradient(circle at 10% 15%, rgba(104, 91, 199, .10), transparent 30%),
+        radial-gradient(circle at 90% 85%, rgba(153, 137, 232, .12), transparent 30%),
+        var(--eventa-page);
+}
+
+body.login .eventa-admin-login .login-card {
+    width: 100%;
+    max-width: 460px;
+}
+
+body.login .eventa-admin-login .login-campos .mb-3 {
+    margin-bottom: 0 !important;
+}
+
+body.login .eventa-admin-login form {
+    width: 100%;
+}
+
+body.login #footer {
+    margin-left: 0;
+}
+
+@media (max-width: 650px) {
+    body.login #header {
+        min-height: 56px;
+        padding: 10px 16px;
+    }
+
+    body.login .eventa-admin-login {
+        min-height: auto;
+        padding: 35px 14px;
+    }
+}
