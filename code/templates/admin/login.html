@@ -1,27 +1,52 @@
 {% extends "admin/login.html" %}
+{% load static %}
+
+{% block extrahead %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/eventa.css' %}">
+{% endblock %}
+
 {% block content %}
-<p class="login-box-msg">Bem-vindo ao EVENTA</p>
-{% if user.is_authenticated %}
-<div class="callout callout-warning">Sua conta não tem acesso a esta página. Entre com uma conta autorizada.</div>
-{% endif %}
-<form method="post" action="{{ app_path }}">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next|default:'/admin/' }}">
-    {% if form.errors %}<div class="callout callout-danger" role="alert">{{ form.non_field_errors }}{{ form.username.errors }}{{ form.password.errors }}</div>{% endif %}
-    <div class="form-group">
-        <label for="id_username">E-mail</label>
-        <div class="input-group">
-            <input class="form-control" type="email" id="id_username" name="username" value="{{ form.username.value|default_if_none:'' }}" autocomplete="username" required autofocus>
-            <div class="input-group-append"><span class="input-group-text"><i class="fas fa-user" aria-hidden="true"></i></span></div>
-        </div>
+<div class="login-page eventa-admin-login">
+  <div class="login-card">
+    <div class="login-cabecalho">
+      <div class="login-logo">E</div>
+      <span class="login-boas-vindas">ACESSO ADMINISTRATIVO</span>
+      <h1>Bem-vindo ao EVENTA</h1>
+      <p>Entre com sua conta para acessar o painel de administração.</p>
     </div>
-    <div class="form-group">
-        <label for="id_password">Senha</label>
-        <div class="input-group">
-            <input class="form-control" type="password" id="id_password" name="password" autocomplete="current-password" required>
-            <div class="input-group-append"><span class="input-group-text"><i class="fas fa-lock" aria-hidden="true"></i></span></div>
-        </div>
-    </div>
-    <button class="btn btn-primary btn-block" type="submit">Entrar</button>
-</form>
+
+    {% if user.is_authenticated %}
+      <div class="alert alert-warning login-alerta" role="alert">
+        Sua conta não tem autorização para acessar esta página.
+      </div>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger login-alerta" role="alert">
+        {% for erro in form.non_field_errors %}{{ erro }}{% endfor %}
+      </div>
+    {% endif %}
+
+    <form method="post" action="{{ app_path }}" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next|default:'/admin/' }}">
+
+      <div class="login-campos">
+        {% include "includes/campo_form.html" with campo=form.username %}
+        {% include "includes/campo_form.html" with campo=form.password %}
+      </div>
+
+      <button type="submit" class="login-botao">
+        Entrar no painel
+        <span aria-hidden="true">→</span>
+      </button>
+    </form>
+
+    <div class="login-divisor"><span>EVENTA · ADMINISTRAÇÃO</span></div>
+    <a href="{% url 'eventos:lista' %}" class="login-cadastro">Voltar aos eventos</a>
+  </div>
+
+  <p class="login-rodape">Gestão de eventos e venda de ingressos</p>
+</div>
 {% endblock %}

@@ -1,0 +1,3 @@
+{% extends "base.html" %}
+{% block title %}Excluir evento{% endblock %}
+{% block content %}<div class="card card-body"><h1 class="h3">Excluir evento</h1><p>Tem certeza de que deseja excluir “{{ object.nome }}”?</p><form method="post">{% csrf_token %}<button class="btn btn-danger" type="submit">Confirmar exclusão</button> <a class="btn btn-outline-secondary" href="{% url 'eventos:gestao_lista' %}">Cancelar</a></form></div>{% endblock %}

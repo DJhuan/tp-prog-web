@@ -50,6 +50,15 @@
             </li>
           {% endif %}
 
+          {% if user.perfil == "COORDENADOR" %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'eventos:gestao_lista' %}">Meus eventos</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'eventos:dashboard' %}">Dashboard</a></li>
+          {% endif %}
+
+          {% if user.perfil == "ORGANIZADOR" %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'ingressos:eventos_organizador' %}">Eventos que organizo</a></li>
+          {% endif %}
+
         {% endif %}
 
         {% if not user.is_authenticated or user.perfil == "PARTICIPANTE" %}
