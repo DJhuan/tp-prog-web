@@ -1,0 +1,2749 @@
+/* =====================================================
+   1. VARIÁVEIS
+===================================================== */
+
+:root {
+    --eventa-navy: #172B4D;
+    --eventa-blue: #3B82F6;
+    --eventa-blue-hover: #2563EB;
+
+    --eventa-sidebar-text: #C6D3E5;
+    --eventa-sidebar-hover: #263F63;
+
+    --eventa-background: #F4F6FA;
+    --eventa-surface: #FFFFFF;
+    --eventa-text: #263449;
+    --eventa-muted: #778397;
+    --eventa-border: #E7EBF1;
+
+    --eventa-radius: 14px;
+    --eventa-sidebar-width: 264px;
+    --eventa-header-height: 66px;
+}
+
+/* Tema escuro nativo do Django */
+html[data-theme="dark"] {
+    --eventa-background: #111827;
+    --eventa-surface: #1F2937;
+    --eventa-text: #E5E7EB;
+    --eventa-muted: #A0AEC0;
+    --eventa-border: #374151;
+
+    --eventa-sidebar-hover: #26364D;
+}
+
+
+/* =====================================================
+   2. ESTRUTURA GERAL
+===================================================== */
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    background: var(--eventa-background);
+    color: var(--eventa-text);
+}
+
+#container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    display: block;
+    flex: 1;
+    min-width: 0;
+    min-height: 100vh;
+    margin-left: var(--eventa-sidebar-width);
+    padding-top: var(--eventa-header-height);
+    box-sizing: border-box;
+    background: var(--eventa-background);
+}
+
+.main > main.content {
+    min-width: 0;
+    padding: 30px 34px;
+    background: var(--eventa-background);
+}
+
+#content {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#content h1 {
+    margin: 0 0 22px;
+    color: var(--eventa-text);
+    font-size: 26px;
+    font-weight: 700;
+}
+
+#content h2,
+#content h3 {
+    color: var(--eventa-text);
+}
+
+#footer {
+    margin-left: var(--eventa-sidebar-width);
+    padding: 18px 32px;
+    border-top: 1px solid var(--eventa-border);
+    background: var(--eventa-surface);
+    color: var(--eventa-muted);
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   3. CABEÇALHO
+===================================================== */
+
+#header {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    left: var(--eventa-sidebar-width);
+
+    height: var(--eventa-header-height);
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    padding: 0 32px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    border-bottom: 1px solid var(--eventa-border);
+    box-shadow: 0 2px 8px rgba(23, 43, 77, .03);
+}
+
+#branding {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    min-width: 0;
+}
+
+.eventa-brand a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--eventa-navy);
+    text-decoration: none;
+
+    font-size: 21px;
+    font-weight: 800;
+    letter-spacing: .3px;
+}
+
+html[data-theme="dark"] .eventa-brand a {
+    color: #FFFFFF;
+}
+
+.eventa-brand-icon {
+    width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.eventa-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--eventa-muted);
+    font-size: 13px;
+}
+
+.eventa-breadcrumb-separator {
+    color: #B8C2D0;
+}
+
+
+/* =====================================================
+   4. INFORMAÇÕES DO USUÁRIO
+===================================================== */
+
+#user-tools.eventa-user-tools {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    margin: 0;
+    padding: 0;
+
+    color: var(--eventa-text);
+    font-size: 12px;
+    text-align: right;
+}
+
+.eventa-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+}
+
+.eventa-user-email {
+    color: var(--eventa-text);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.eventa-user-role {
+    color: var(--eventa-muted);
+    font-size: 11px;
+}
+
+#logout-form {
+    display: inline;
+    margin: 0;
+}
+
+#user-tools .eventa-logout {
+    padding: 8px 13px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--eventa-text);
+
+    font: inherit;
+    cursor: pointer;
+    transition: .2s;
+}
+
+#user-tools .eventa-logout:hover {
+    border-color: var(--eventa-blue);
+    color: var(--eventa-blue);
+}
+
+/* Seletor de tema nativo */
+#user-tools #django-admin-theme-toggle {
+    margin: 0;
+    padding: 7px;
+}
+
+
+/* =====================================================
+   5. MENU LATERAL
+===================================================== */
+
+.eventa-sidebar {
+    position: fixed;
+    z-index: 110;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    width: var(--eventa-sidebar-width);
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+}
+
+.eventa-sidebar-brand {
+    min-height: var(--eventa-header-height);
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 0 24px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
+
+.eventa-logo {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.eventa-sidebar-brand strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: 17px;
+    letter-spacing: .5px;
+}
+
+.eventa-sidebar-brand small {
+    display: block;
+    margin-top: 3px;
+
+    color: var(--eventa-sidebar-text);
+    font-size: 11px;
+}
+
+.eventa-navigation {
+    flex: 1;
+    padding: 22px 14px;
+}
+
+.eventa-menu-label {
+    display: block;
+    margin: 18px 10px 9px;
+
+    color: #91A5C2;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.eventa-menu-section:first-child .eventa-menu-label {
+    margin-top: 0;
+}
+
+.eventa-menu-section {
+    margin-top: 20px;
+}
+
+.eventa-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-height: 44px;
+    margin: 3px 0;
+    padding: 0 12px;
+
+    border-radius: 8px;
+
+    color: var(--eventa-sidebar-text);
+    font-size: 13px;
+    text-decoration: none;
+
+    transition: background .2s ease, color .2s ease;
+}
+
+.eventa-menu-item:hover {
+    background: var(--eventa-sidebar-hover);
+    color: #FFFFFF;
+}
+
+.eventa-menu-item.active {
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+.eventa-menu-icon {
+    width: 20px;
+    flex-shrink: 0;
+
+    color: #AFC9ED;
+    font-size: 16px;
+    text-align: center;
+}
+
+.eventa-menu-item.active .eventa-menu-icon {
+    color: #FFFFFF;
+}
+
+.eventa-sidebar-footer {
+    margin: 0 16px;
+    padding: 18px 10px;
+
+    border-top: 1px solid rgba(255, 255, 255, .12);
+
+    color: #91A5C2;
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   6. DASHBOARD
+===================================================== */
+
+/* Cabeçalho da página */
+.dashboard #content .dashboard-heading h1 {
+    display: block !important;
+
+    margin: 0 0 8px !important;
+
+    color: var(--eventa-text) !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+}
+
+.dashboard-heading {
+    margin-bottom: 28px;
+}
+
+.dashboard-heading p {
+    margin: 0;
+    color: var(--eventa-muted);
+    font-size: 14px;
+}
+
+/* Container dos indicadores */
+.dashboard .container-fluid {
+    width: 100%;
+}
+
+/* Quatro cards lado a lado */
+.dashboard .container-fluid > .row {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+    gap: 20px !important;
+    margin: 0 0 24px !important;
+}
+
+.dashboard .container-fluid > .row > div {
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0;
+
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Card individual */
+.dashboard-card {
+    height: 100%;
+    min-height: 175px;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: var(--eventa-radius) !important;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+
+    transition: transform .2s, box-shadow .2s;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(23, 43, 77, .08);
+}
+
+.dashboard-card .card-body {
+    padding: 22px !important;
+}
+
+.dashboard-card .d-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+}
+
+.dashboard-card span {
+    color: var(--eventa-muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.dashboard-card h2 {
+    margin: 0 0 7px;
+
+    color: var(--eventa-text);
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.dashboard-card p {
+    margin: 0;
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+/* Ícones dos indicadores */
+/* Ícones dos indicadores do dashboard */
+.dashboard-card .dashboard-icon {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    flex-shrink: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 0 0 auto;
+    padding: 0;
+
+    background: rgba(59, 130, 246, .10);
+    color: var(--eventa-blue);
+
+    border: 0;
+    border-radius: 11px;
+
+    font-size: 18px;
+    line-height: 1;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Card de boas-vindas */
+.welcome-card {
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: var(--eventa-radius) !important;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+.welcome-card .card-body {
+    padding: 26px !important;
+}
+
+.welcome-card h4 {
+    margin: 0 0 10px;
+
+    color: var(--eventa-text);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.welcome-card p {
+    margin: 0;
+
+    color: var(--eventa-muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+/* Tema escuro do dashboard */
+html[data-theme="dark"] .dashboard-card,
+html[data-theme="dark"] .welcome-card {
+    background: var(--eventa-surface) !important;
+    border-color: var(--eventa-border) !important;
+}
+
+html[data-theme="dark"] .dashboard-card h2,
+html[data-theme="dark"] .welcome-card h4 {
+    color: var(--eventa-text);
+}
+
+
+/* =====================================================
+   7. MÓDULOS NATIVOS DO DASHBOARD
+===================================================== */
+
+.dashboard .module {
+    overflow: hidden;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+
+    background: var(--eventa-surface);
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .035);
+}
+
+.dashboard .module caption,
+.dashboard .module h2 {
+    padding: 13px 16px;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+
+    font-size: 13px;
+}
+
+.dashboard .module table {
+    width: 100%;
+}
+
+.dashboard .module table th,
+.dashboard .module table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--eventa-border);
+}
+
+.dashboard .module table tr:last-child th,
+.dashboard .module table tr:last-child td {
+    border-bottom: 0;
+}
+
+
+/* =====================================================
+   8. LISTAGENS E TABELAS
+===================================================== */
+
+#changelist {
+    display: block;
+    overflow: visible;
+
+    background: transparent !important;
+    border: 0;
+    box-shadow: none;
+}
+
+#changelist-form {
+    min-width: 0;
+}
+
+/* Busca, ações e filtros */
+#changelist-search,
+#changelist .actions,
+#changelist-filter {
+    padding: 16px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 10px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+#changelist-search {
+    margin-bottom: 16px;
+}
+
+#changelist-search input[type="text"] {
+    min-height: 40px;
+    padding: 9px 12px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 7px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+#changelist-search input[type="submit"] {
+    min-height: 40px;
+    padding: 9px 18px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+}
+
+/* Área da tabela */
+#changelist .results {
+    overflow-x: auto;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+
+    background: var(--eventa-surface);
+}
+
+#result_list {
+    width: 100%;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: var(--eventa-surface);
+}
+
+#result_list thead th {
+    padding: 15px 16px;
+
+    background: #EDF2FA;
+    color: var(--eventa-navy);
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+#result_list tbody td,
+#result_list tbody th {
+    padding: 14px 16px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+#result_list tbody tr:last-child td,
+#result_list tbody tr:last-child th {
+    border-bottom: 0;
+}
+
+#result_list tbody tr:hover td,
+#result_list tbody tr:hover th {
+    background: #F5F8FD;
+}
+
+#result_list a {
+    color: var(--eventa-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+#result_list a:hover {
+    text-decoration: underline;
+}
+
+/* Tema escuro das tabelas */
+html[data-theme="dark"] #result_list thead th {
+    background: #26364D;
+    color: #E5E7EB;
+}
+
+html[data-theme="dark"] #result_list tbody tr:hover td,
+html[data-theme="dark"] #result_list tbody tr:hover th {
+    background: #26364D;
+}
+
+/* Botão adicionar */
+.object-tools {
+    margin-bottom: 18px !important;
+}
+
+.object-tools a,
+.object-tools a.addlink {
+    padding: 10px 16px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF !important;
+
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   9. FILTROS
+===================================================== */
+
+#changelist-filter {
+    margin-left: 18px;
+}
+
+#changelist-filter h2 {
+    padding: 12px;
+
+    border-radius: 7px;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+
+    font-size: 12px;
+}
+
+#changelist-filter li {
+    padding: 5px 0;
+    font-size: 12px;
+}
+
+#changelist-filter a {
+    color: var(--eventa-muted);
+}
+
+#changelist-filter li.selected a {
+    color: var(--eventa-blue);
+    font-weight: 600;
+}
+
+
+/* =====================================================
+   10. FORMULÁRIOS
+===================================================== */
+
+form .module,
+fieldset.module,
+.inline-group {
+    margin-bottom: 22px;
+    overflow: hidden;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+
+    background: var(--eventa-surface);
+}
+
+fieldset.module h2,
+fieldset.module caption,
+.inline-group h2 {
+    padding: 15px 20px;
+
+    background: var(--eventa-navy);
+    color: #FFFFFF;
+
+    font-size: 13px;
+    font-weight: 650;
+}
+
+.form-row {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--eventa-border);
+}
+
+.form-row:last-child {
+    border-bottom: 0;
+}
+
+.form-row label,
+.aligned label {
+    color: var(--eventa-text);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Campos */
+.form-row input:not([type="checkbox"]):not([type="radio"]),
+.form-row select,
+.form-row textarea,
+.aligned input:not([type="checkbox"]):not([type="radio"]),
+.aligned select,
+.aligned textarea {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 40px;
+
+    padding: 9px 12px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 7px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    font: inherit;
+    font-size: 13px;
+}
+
+.form-row textarea,
+.aligned textarea {
+    min-height: 110px;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus,
+.aligned input:focus,
+.aligned select:focus,
+.aligned textarea:focus {
+    outline: none;
+
+    border-color: var(--eventa-blue);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, .12);
+}
+
+/* Ajuda e validação */
+.help,
+.helptext,
+p.help {
+    margin-top: 7px;
+
+    color: var(--eventa-muted);
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.errorlist {
+    margin: 6px 0;
+    padding: 9px 12px;
+
+    border-radius: 7px;
+
+    background: #FEF2F2;
+    color: #B91C1C;
+
+    font-size: 12px;
+}
+
+.required label:after {
+    color: #EF4444;
+}
+
+
+/* =====================================================
+   11. BOTÕES E AÇÕES
+===================================================== */
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.addlink,
+.object-tools a {
+    min-height: 38px;
+    padding: 9px 16px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF !important;
+
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition: background .2s, transform .2s;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.object-tools a:hover {
+    background: var(--eventa-blue-hover);
+    transform: translateY(-1px);
+}
+
+.submit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    padding: 16px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 10px;
+
+    background: var(--eventa-surface);
+}
+
+.submit-row .deletelink {
+    margin-left: auto;
+    color: #DC2626 !important;
+    background: #FEF2F2 !important;
+}
+
+.deletelink {
+    border-radius: 7px;
+}
+
+
+/* =====================================================
+   12. MENSAGENS
+===================================================== */
+
+.messagelist {
+    margin: 0 0 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.messagelist li {
+    margin-bottom: 9px;
+    padding: 13px 16px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 9px;
+
+    font-size: 13px;
+}
+
+.messagelist li.success {
+    background: #ECFDF5;
+    color: #047857;
+}
+
+.messagelist li.warning {
+    background: #FFFBEB;
+    color: #B45309;
+}
+
+.messagelist li.error {
+    background: #FEF2F2;
+    color: #B91C1C;
+}
+
+html[data-theme="dark"] .messagelist li {
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+
+/* =====================================================
+   13. PAGINAÇÃO E LINKS
+===================================================== */
+
+.paginator {
+    padding: 15px;
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+a:link,
+a:visited {
+    color: var(--eventa-blue);
+}
+
+
+/* =====================================================
+   14. TEMA ESCURO
+===================================================== */
+
+html[data-theme="dark"] body,
+html[data-theme="dark"] .main > main.content {
+    background: var(--eventa-background);
+    color: var(--eventa-text);
+}
+
+html[data-theme="dark"] .dashboard .module,
+html[data-theme="dark"] form .module,
+html[data-theme="dark"] fieldset.module,
+html[data-theme="dark"] .inline-group,
+html[data-theme="dark"] .submit-row,
+html[data-theme="dark"] #changelist-search,
+html[data-theme="dark"] #changelist .actions,
+html[data-theme="dark"] #changelist-filter,
+html[data-theme="dark"] #changelist .results {
+    background: var(--eventa-surface);
+    border-color: var(--eventa-border);
+}
+
+html[data-theme="dark"] .dashboard-card,
+html[data-theme="dark"] .welcome-card {
+    background: var(--eventa-surface) !important;
+    border-color: var(--eventa-border) !important;
+}
+
+html[data-theme="dark"] .dashboard-card h2,
+html[data-theme="dark"] .welcome-card h4,
+html[data-theme="dark"] #content h1 {
+    color: var(--eventa-text);
+}
+
+html[data-theme="dark"] .form-row input,
+html[data-theme="dark"] .form-row select,
+html[data-theme="dark"] .form-row textarea {
+    background: #111827;
+    color: var(--eventa-text);
+    border-color: var(--eventa-border);
+}
+
+
+/* =====================================================
+   15. RESPONSIVIDADE
+===================================================== */
+
+/* Tablets e telas menores */
+@media (max-width: 1100px) {
+    .dashboard .container-fluid > .row {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    #header {
+        padding: 0 18px;
+    }
+
+    .main > main.content {
+        padding: 24px 20px;
+    }
+
+    #changelist-filter {
+        margin: 15px 0 0;
+    }
+}
+
+/* Celulares */
+@media (max-width: 650px) {
+    :root {
+        --eventa-sidebar-width: 0px;
+        --eventa-header-height: 60px;
+    }
+
+    .eventa-sidebar {
+        display: none;
+    }
+
+    #header {
+        left: 0;
+        padding: 0 14px;
+    }
+
+    #branding {
+        gap: 10px;
+    }
+
+    .eventa-breadcrumb,
+    .eventa-user-info {
+        display: none;
+    }
+
+    #user-tools.eventa-user-tools {
+        gap: 8px;
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .main > main.content {
+        padding: 20px 14px;
+    }
+
+    #footer {
+        margin-left: 0;
+        padding: 16px;
+    }
+
+    .dashboard .container-fluid > .row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .form-row {
+        padding: 13px;
+    }
+
+    .submit-row {
+        flex-direction: column;
+    }
+
+    .submit-row input {
+        width: 100%;
+    }
+}
+
+/* =====================================================
+   LISTAGENS DO ADMIN EVENTA
+===================================================== */
+
+/* Área principal */
+#changelist {
+    background: transparent !important;
+}
+
+/* Barra de pesquisa */
+#changelist #toolbar {
+    padding: 16px !important;
+    margin-bottom: 18px;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+#changelist #toolbar form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#changelist #toolbar input[type="text"] {
+    min-height: 42px;
+    padding: 10px 14px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 8px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+}
+
+/* Botão pesquisar */
+#changelist #toolbar input[type="submit"] {
+    min-height: 42px;
+    padding: 10px 20px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--eventa-blue);
+    color: #fff;
+}
+
+/* Área de resultados */
+#changelist .results {
+    overflow: hidden;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+/* Contador de registros */
+#changelist .paginator {
+    margin-top: 16px;
+    padding: 14px 18px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-muted);
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 9px;
+
+    font-size: 12px;
+}
+
+/* Cabeçalho da listagem */
+#content-main {
+    min-width: 0;
+}
+
+#changelist-form {
+    min-width: 0;
+}
+
+/* Botão adicionar */
+.object-tools a {
+    border-radius: 8px !important;
+}
+
+/* =====================================================
+   AJUSTES FINOS DAS TELAS DO ADMIN
+===================================================== */
+
+/* Logo EVENTA no cabeçalho */
+#header .eventa-brand a {
+    color: #172B4D !important;
+    text-decoration: none !important;
+}
+
+#header .eventa-brand a span:last-child {
+    color: #172B4D !important;
+    opacity: 1 !important;
+}
+
+html[data-theme="dark"] #header .eventa-brand a,
+html[data-theme="dark"] #header .eventa-brand a span:last-child {
+    color: #FFFFFF !important;
+}
+
+/* Contador de registros */
+#changelist .paginator {
+    display: block;
+    margin: 16px 0 0;
+    padding: 12px 16px;
+
+    background: transparent !important;
+    border: 0 !important;
+    border-top: 1px solid var(--eventa-border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    color: var(--eventa-muted) !important;
+    font-size: 12px;
+}
+
+/* Remove aparência de botão do contador */
+#changelist .paginator a,
+#changelist .paginator span,
+#changelist .paginator .this-page {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: var(--eventa-muted) !important;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   EVENTA | REFINAMENTO DAS TELAS DE LISTAGEM
+===================================================== */
+
+/* 1. ESTRUTURA DA LISTAGEM */
+
+#changelist {
+    display: flow-root;
+    width: 100%;
+    color: var(--eventa-text);
+}
+
+#changelist-form {
+    min-width: 0;
+}
+
+#changelist .results {
+    overflow-x: auto;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px !important;
+    background: var(--eventa-surface) !important;
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+/* 2. FILTROS LATERAIS */
+
+#changelist-filter {
+    box-sizing: border-box;
+    width: 220px;
+    margin-left: 18px;
+    padding: 14px !important;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 12px !important;
+
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .04);
+}
+
+#changelist-filter h2 {
+    margin: 0 0 14px;
+    padding: 12px 14px !important;
+
+    background: var(--eventa-navy) !important;
+    color: #FFFFFF !important;
+
+    border-radius: 8px;
+    font-size: 12px !important;
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+#changelist-filter h3 {
+    margin: 18px 0 8px;
+    padding: 0;
+
+    color: var(--eventa-text);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+#changelist-filter ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#changelist-filter li {
+    margin: 3px 0;
+    padding: 0;
+    font-size: 12px;
+}
+
+#changelist-filter a {
+    display: block;
+    padding: 7px 9px;
+
+    color: var(--eventa-muted) !important;
+    border-radius: 6px;
+    text-decoration: none !important;
+
+    transition: background .2s, color .2s;
+}
+
+#changelist-filter a:hover {
+    background: rgba(59, 130, 246, .08);
+    color: var(--eventa-blue) !important;
+}
+
+#changelist-filter li.selected {
+    border-left: 3px solid var(--eventa-blue);
+}
+
+#changelist-filter li.selected a {
+    background: rgba(59, 130, 246, .08);
+    color: var(--eventa-blue) !important;
+    font-weight: 700;
+}
+
+/* 3. BARRA DE AÇÕES EM MASSA */
+
+#changelist .actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    margin: 0 0 16px;
+    padding: 14px 16px !important;
+
+    background: var(--eventa-surface) !important;
+    border: 1px solid var(--eventa-border) !important;
+    border-radius: 10px !important;
+}
+
+#changelist .actions label {
+    color: var(--eventa-muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+#changelist .actions select {
+    min-height: 38px;
+    padding: 7px 32px 7px 10px;
+
+    border: 1px solid var(--eventa-border);
+    border-radius: 7px;
+
+    background-color: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    font-size: 12px;
+}
+
+#changelist .actions button {
+    min-height: 38px;
+    padding: 8px 17px;
+
+    border: 0;
+    border-radius: 7px;
+
+    background: var(--eventa-blue);
+    color: #FFFFFF;
+
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#changelist .actions button:hover {
+    background: var(--eventa-blue-hover);
+}
+
+#changelist .actions .action-counter {
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+/* 4. TABELA DE REGISTROS */
+
+#result_list {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--eventa-surface);
+}
+
+#result_list thead th {
+    padding: 14px 15px;
+
+    background: #EDF2FA !important;
+    color: var(--eventa-navy) !important;
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .35px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+#result_list thead th a {
+    color: var(--eventa-navy) !important;
+    text-decoration: none !important;
+}
+
+#result_list tbody td,
+#result_list tbody th {
+    padding: 14px 15px;
+
+    background: var(--eventa-surface);
+    color: var(--eventa-text);
+
+    border-bottom: 1px solid var(--eventa-border);
+
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+#result_list tbody tr:last-child td,
+#result_list tbody tr:last-child th {
+    border-bottom: 0;
+}
+
+#result_list tbody tr:hover td,
+#result_list tbody tr:hover th {
+    background: #F5F8FD;
+}
+
+#result_list tbody th a,
+#result_list tbody td a {
+    color: var(--eventa-blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+#result_list tbody th a:hover,
+#result_list tbody td a:hover {
+    text-decoration: underline;
+}
+
+/* 5. CONTADOR E PAGINAÇÃO */
+
+#changelist .paginator {
+    display: block;
+    margin: 14px 0 0;
+    padding: 13px 16px;
+
+    background: transparent !important;
+    color: var(--eventa-muted) !important;
+
+    border: 0 !important;
+    border-top: 1px solid var(--eventa-border) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    font-size: 12px;
+}
+
+#changelist .paginator a,
+#changelist .paginator .this-page {
+    color: var(--eventa-blue) !important;
+    background: transparent !important;
+    border: 0 !important;
+    text-decoration: none;
+}
+
+/* 6. TEMA ESCURO */
+
+html[data-theme="dark"] #changelist-filter,
+html[data-theme="dark"] #changelist .actions {
+    background: var(--eventa-surface) !important;
+    border-color: var(--eventa-border) !important;
+}
+
+html[data-theme="dark"] #changelist-filter h3,
+html[data-theme="dark"] #changelist .actions label {
+    color: var(--eventa-text);
+}
+
+html[data-theme="dark"] #result_list thead th {
+    background: #26364D !important;
+    color: #E5E7EB !important;
+}
+
+html[data-theme="dark"] #result_list thead th a {
+    color: #E5E7EB !important;
+}
+
+html[data-theme="dark"] #result_list tbody tr:hover td,
+html[data-theme="dark"] #result_list tbody tr:hover th {
+    background: #26364D;
+}
+
+html[data-theme="dark"] #changelist-filter a:hover,
+html[data-theme="dark"] #changelist-filter li.selected a {
+    background: #26364D;
+}
+
+/* 7. RESPONSIVIDADE */
+
+@media (max-width: 767px) {
+    #changelist-filter {
+        float: none;
+        width: 100%;
+        margin: 16px 0;
+    }
+
+    #changelist .actions {
+        align-items: stretch;
+    }
+
+    #changelist .results {
+        max-width: 100%;
+    }
+}
+
+
+/* EVENTA | Mensagens de sucesso */
+
+.messagelist li.success {
+    background: #ECFDF5 !important;
+    background-image: none !important;
+
+    color: #166534 !important;
+
+    border: 1px solid #BBF7D0 !important;
+    border-left: 4px solid #22C55E !important;
+    border-radius: 10px !important;
+
+    padding: 14px 18px !important;
+    margin-bottom: 12px !important;
+
+    font-size: 13px !important;
+    font-weight: 500;
+
+    box-shadow: none !important;
+}
+
+/* Links dentro da mensagem */
+.messagelist li.success a {
+    color: #166534 !important;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* Tema escuro */
+html[data-theme="dark"] .messagelist li.success {
+    background: #142D23 !important;
+    background-image: none !important;
+    color: #86EFAC !important;
+    border-color: #285C40 !important;
+    border-left-color: #22C55E !important;
+}
+
+html[data-theme="dark"] .messagelist li.success a {
+    color: #86EFAC !important;
+}
+
+
+/* =====================================================
+   EVENTA | DASHBOARD
+===================================================== */
+
+.eventa-dashboard {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+/* Cabeçalho */
+
+.eventa-dashboard .dashboard-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 34px;
+}
+
+.dashboard-eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--eventa-blue);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+}
+
+.eventa-dashboard .dashboard-heading h1 {
+    margin: 0 0 8px !important;
+    color: var(--eventa-text) !important;
+    font-size: 29px !important;
+    font-weight: 750 !important;
+}
+
+.eventa-dashboard .dashboard-heading p {
+    margin: 0;
+    color: var(--eventa-muted);
+    font-size: 13px;
+}
+
+.dashboard-heading-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 15px;
+    background: rgba(59, 130, 246, .10);
+    color: var(--eventa-blue);
+    font-size: 22px;
+}
+
+/* Seções */
+
+.dashboard-section {
+    margin-bottom: 30px;
+}
+
+.dashboard-section-heading {
+    margin-bottom: 17px;
+}
+
+.dashboard-section-heading h2 {
+    margin: 0 0 5px;
+    color: var(--eventa-text);
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.dashboard-section-heading p {
+    margin: 0;
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+/* Indicadores */
+
+.dashboard-kpis {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.dashboard-card {
+    min-width: 0;
+    padding: 21px;
+    background: var(--eventa-surface);
+    border: 1px solid var(--eventa-border);
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .035);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(23, 43, 77, .07);
+}
+
+.dashboard-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.dashboard-card-top > span {
+    color: var(--eventa-muted);
+    font-size: 12px;
+    font-weight: 650;
+}
+
+.dashboard-card > strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--eventa-text);
+    font-size: 31px;
+    font-weight: 750;
+    line-height: 1.2;
+}
+
+.dashboard-card > small {
+    display: block;
+    color: var(--eventa-muted);
+    font-size: 11px;
+}
+
+.dashboard-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 39px;
+    height: 39px;
+    border-radius: 11px;
+    font-size: 16px;
+}
+
+.icon-purple {
+    color: #805AD5;
+    background: #F1EBFF;
+}
+
+.icon-blue {
+    color: #2563EB;
+    background: #EAF1FF;
+}
+
+.icon-green {
+    color: #16845B;
+    background: #E6F7EF;
+}
+
+.icon-orange {
+    color: #C77719;
+    background: #FFF3E3;
+}
+
+.icon-cyan {
+    color: #16849A;
+    background: #E3F6FA;
+}
+
+/* Acesso rápido */
+
+.dashboard-quick-access {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.dashboard-quick-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    min-width: 0;
+    padding: 16px;
+    background: var(--eventa-surface);
+    border: 1px solid var(--eventa-border);
+    border-radius: 11px;
+    color: var(--eventa-text) !important;
+    text-decoration: none !important;
+    transition: border-color .2s ease, transform .2s ease;
+}
+
+.dashboard-quick-link:hover {
+    border-color: var(--eventa-blue);
+    transform: translateY(-2px);
+}
+
+.quick-link-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 39px;
+    height: 39px;
+    border-radius: 10px;
+    background: rgba(59, 130, 246, .10);
+    color: var(--eventa-blue);
+    font-size: 16px;
+}
+
+.quick-link-text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    gap: 4px;
+}
+
+.quick-link-text strong {
+    overflow: hidden;
+    color: var(--eventa-text);
+    font-size: 12px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.quick-link-text small {
+    color: var(--eventa-muted);
+    font-size: 10px;
+}
+
+.quick-link-arrow {
+    color: var(--eventa-muted);
+    font-size: 12px;
+    transition: transform .2s ease;
+}
+
+.dashboard-quick-link:hover .quick-link-arrow {
+    color: var(--eventa-blue);
+    transform: translateX(3px);
+}
+
+/* Boas-vindas */
+
+.dashboard-welcome {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 175px;
+    overflow: hidden;
+    padding: 30px 34px;
+    border-radius: 15px;
+    background: linear-gradient(115deg, #172B4D, #284B78);
+    color: #FFFFFF;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+}
+
+.welcome-content > span {
+    display: block;
+    margin-bottom: 10px;
+    color: #AFC9ED;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.welcome-content h2 {
+    margin: 0 0 10px;
+    color: #FFFFFF;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.welcome-content p {
+    margin: 0;
+    color: #D5E1F0;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.welcome-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 125px;
+    height: 125px;
+    flex-shrink: 0;
+    margin-right: 30px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 50%;
+    color: rgba(255,255,255,.22);
+    font-size: 60px;
+}
+
+/* Tema escuro */
+
+html[data-theme="dark"] .icon-purple {
+    background: #30264B;
+    color: #C4A8FF;
+}
+
+html[data-theme="dark"] .icon-blue {
+    background: #243B61;
+    color: #93B9FF;
+}
+
+html[data-theme="dark"] .icon-green {
+    background: #1E4035;
+    color: #83D6B0;
+}
+
+html[data-theme="dark"] .icon-orange {
+    background: #493722;
+    color: #F4C17D;
+}
+
+html[data-theme="dark"] .icon-cyan {
+    background: #1D414A;
+    color: #8DD8E5;
+}
+
+html[data-theme="dark"] .quick-link-icon {
+    background: #263B5A;
+    color: #AFC9ED;
+}
+
+/* Responsividade */
+
+@media (max-width: 1200px) {
+    .dashboard-kpis {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .dashboard-quick-access {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .dashboard-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .eventa-dashboard .dashboard-heading {
+        margin-bottom: 24px;
+    }
+
+    .eventa-dashboard .dashboard-heading h1 {
+        font-size: 24px !important;
+    }
+
+    .dashboard-kpis,
+    .dashboard-quick-access {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-card {
+        padding: 18px;
+    }
+
+    .dashboard-welcome {
+        min-height: 0;
+        padding: 25px 22px;
+    }
+
+    .welcome-content h2 {
+        font-size: 18px;
+    }
+
+    .welcome-decoration {
+        display: none;
+    }
+}
+
+/* =====================================================
+   EVENTA - DASHBOARD ANALÍTICO
+===================================================== */
+
+.eventa-dashboard {
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    color: var(--eventa-text);
+}
+
+/* Cabeçalho */
+
+.dash-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.dash-eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--eventa-blue);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+}
+
+.dash-header h1 {
+    margin: 0 0 7px;
+    color: var(--eventa-text);
+    font-size: 27px;
+    font-weight: 750;
+}
+
+.dash-header p,
+.dash-panel-heading p {
+    margin: 0;
+    color: var(--eventa-muted);
+    font-size: 12px;
+}
+
+.dash-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: rgba(59, 130, 246, .10);
+    color: var(--eventa-blue);
+    font-size: 21px;
+}
+
+/* Filtro de período */
+
+.dash-period {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 16px 19px;
+    background: var(--eventa-surface);
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+}
+
+.dash-period > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dash-period > div strong {
+    font-size: 13px;
+}
+
+.dash-period > div span {
+    color: var(--eventa-muted);
+    font-size: 11px;
+}
+
+.dash-period-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.dash-period-options a {
+    padding: 8px 11px;
+    border-radius: 7px;
+    color: var(--eventa-muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: .2s;
+}
+
+.dash-period-options a:hover {
+    background: var(--eventa-background);
+    color: var(--eventa-blue);
+}
+
+.dash-period-options a.active {
+    background: var(--eventa-blue);
+    color: #fff;
+}
+
+/* Indicadores */
+
+.dash-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.dash-kpi {
+    min-width: 0;
+    padding: 19px;
+    background: var(--eventa-surface);
+    border: 1px solid var(--eventa-border);
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .025);
+}
+
+.dash-kpi-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.dash-kpi-top > span:first-child {
+    color: var(--eventa-muted);
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.dash-kpi-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.dash-kpi-icon.purple {
+    color: #805AD5;
+    background: #F1EBFF;
+}
+
+.dash-kpi-icon.blue {
+    color: #2563EB;
+    background: #EAF1FF;
+}
+
+.dash-kpi-icon.green {
+    color: #16845B;
+    background: #E6F7EF;
+}
+
+.dash-kpi-icon.orange {
+    color: #C77719;
+    background: #FFF3E3;
+}
+
+.dash-kpi > strong {
+    display: block;
+    overflow-wrap: anywhere;
+    margin-bottom: 6px;
+    color: var(--eventa-text);
+    font-size: 25px;
+    font-weight: 750;
+}
+
+.dash-kpi > small {
+    color: var(--eventa-muted);
+    font-size: 10px;
+}
+
+/* Painéis */
+
+.dash-panel {
+    min-width: 0;
+    margin-bottom: 20px;
+    padding: 22px;
+    background: var(--eventa-surface);
+    border: 1px solid var(--eventa-border);
+    border-radius: 13px;
+    box-shadow: 0 3px 12px rgba(23, 43, 77, .025);
+}
+
+.dash-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.dash-panel-heading h2 {
+    margin: 0 0 5px;
+    color: var(--eventa-text);
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.dash-panel-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 10px;
+    border-radius: 7px;
+    background: var(--eventa-background);
+    color: var(--eventa-muted);
+    font-size: 10px;
+    font-weight: 650;
+    white-space: nowrap;
+}
+
+.dash-heading-icon {
+    color: var(--eventa-muted);
+    font-size: 17px;
+}
+
+/* Gráfico de vendas */
+
+.sales-chart {
+    display: flex;
+    align-items: stretch;
+    gap: 9px;
+    min-height: 215px;
+    padding: 10px 4px 0;
+    overflow-x: auto;
+}
+
+.sales-column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 25px;
+}
+
+.sales-value {
+    min-height: 17px;
+    margin-bottom: 6px;
+    color: var(--eventa-muted);
+    font-size: 9px;
+    font-weight: 650;
+}
+
+.sales-bar-area {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 145px;
+    border-bottom: 1px solid var(--eventa-border);
+    background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 35px,
+        var(--eventa-border) 36px
+    );
+}
+
+.sales-bar {
+    width: min(70%, 28px);
+    min-height: 2px;
+    border-radius: 5px 5px 0 0;
+    background: linear-gradient(180deg, #65A2FF, #3978E8);
+    transition: height .3s ease;
+}
+
+.sales-date {
+    margin-top: 9px;
+    color: var(--eventa-muted);
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.chart-legend span {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--eventa-muted);
+    font-size: 10px;
+}
+
+.chart-legend i {
+    width: 8px;
+    height: 8px;
+    border-radius: 3px;
+    background: #3978E8;
+}
+
+/* Gráficos de pizza */
+
+.dash-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.donut-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 25px;
+    min-height: 175px;
+}
+
+.donut-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 145px;
+    height: 145px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+.donut-hole {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 93px;
+    height: 93px;
+    border-radius: 50%;
+    background: var(--eventa-surface);
+}
+
+.donut-hole strong {
+    color: var(--eventa-text);
+    font-size: 22px;
+    font-weight: 750;
+}
+
+.donut-hole span {
+    margin-top: 2px;
+    color: var(--eventa-muted);
+    font-size: 10px;
+}
+
+.donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 135px;
+}
+
+.donut-legend > div {
+    display: grid;
+    grid-template-columns: 9px 1fr auto;
+    align-items: center;
+    gap: 8px;
+    color: var(--eventa-muted);
+    font-size: 11px;
+}
+
+.donut-legend strong {
+    color: var(--eventa-text);
+    font-size: 12px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.blue-dot {
+    background: #3978E8;
+}
+
+.orange-dot {
+    background: #F1A94E;
+}
+
+.red-dot {
+    background: #E56B78;
+}
+
+.green-dot {
+    background: #20A779;
+}
+
+/* Ranking */
+
+.ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.ranking-position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 31px;
+    height: 31px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: var(--eventa-background);
+    color: var(--eventa-muted);
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.ranking-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ranking-info > strong {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 8px;
+    color: var(--eventa-text);
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ranking-track {
+    width: 100%;
+    height: 7px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--eventa-background);
+}
+
+.ranking-progress {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #3978E8, #76A8F5);
+}
+
+.ranking-total {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 65px;
+}
+
+.ranking-total strong {
+    color: var(--eventa-text);
+    font-size: 14px;
+}
+
+.ranking-total small {
+    color: var(--eventa-muted);
+    font-size: 9px;
+}
+
+/* Resumo inferior */
+
+.dash-bottom-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+    margin-bottom: 25px;
+}
+
+.dash-bottom-summary > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 17px;
+    background: var(--eventa-surface);
+    border: 1px solid var(--eventa-border);
+    border-radius: 11px;
+}
+
+.summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: var(--eventa-background);
+    color: var(--eventa-blue);
+}
+
+.dash-bottom-summary > div > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.dash-bottom-summary small {
+    color: var(--eventa-muted);
+    font-size: 10px;
+}
+
+.dash-bottom-summary strong {
+    color: var(--eventa-text);
+    font-size: 19px;
+}
+
+/* Estado vazio */
+
+.dash-empty {
+    width: 100%;
+    padding: 35px 15px;
+    color: var(--eventa-muted);
+    font-size: 12px;
+    text-align: center;
+}
+
+/* Tema escuro */
+
+html[data-theme="dark"] .dash-kpi-icon.purple {
+    background: #30264B;
+    color: #C4A8FF;
+}
+
+html[data-theme="dark"] .dash-kpi-icon.blue {
+    background: #243B61;
+    color: #93B9FF;
+}
+
+html[data-theme="dark"] .dash-kpi-icon.green {
+    background: #1E4035;
+    color: #83D6B0;
+}
+
+html[data-theme="dark"] .dash-kpi-icon.orange {
+    background: #493722;
+    color: #F4C17D;
+}
+
+/* Responsividade */
+
+@media (max-width: 1100px) {
+    .dash-kpis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dash-charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .dash-period {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dash-period-options {
+        width: 100%;
+    }
+
+    .dash-period-options a {
+        padding: 8px;
+    }
+
+    .dash-bottom-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-header h1 {
+        font-size: 22px;
+    }
+
+    .dash-header-icon {
+        width: 43px;
+        height: 43px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dash-kpis {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-panel {
+        padding: 16px;
+    }
+
+    .donut-content {
+        justify-content: center;
+    }
+
+    .donut-legend {
+        width: 100%;
+    }
+}
+
+/* Login administrativo com a mesma identidade visual do login publico. */
+body.login #container {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    background: var(--eventa-page);
+}
+
+body.login {
+    color-scheme: light;
+    --eventa-page: #FAF9FF;
+    --eventa-surface: #FFFFFF;
+    --eventa-surface-soft: #FCFBFF;
+    --eventa-surface-muted: #F8FAFD;
+    --eventa-text: #29263E;
+    --eventa-text-strong: #302E43;
+    --eventa-muted: #858397;
+    --eventa-border: #EEEDF5;
+    --eventa-border-soft: #E5E3ED;
+    --eventa-divider: #E9EDF3;
+    --eventa-primary: #685BC7;
+    --eventa-primary-dark: #5144AD;
+    --eventa-primary-soft: #F0EDFF;
+}
+
+body.login #header {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: var(--eventa-header-height);
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px clamp(16px, 4vw, 32px);
+}
+
+body.login #branding {
+    flex: 1 1 180px;
+}
+
+body.login .eventa-breadcrumb {
+    display: none;
+}
+
+body.login .main {
+    display: flex;
+    flex: 1 0 auto;
+    align-items: stretch;
+    width: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--eventa-page);
+}
+
+body.login .main > main.content {
+    display: flex;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+}
+
+body.login #content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    overflow-wrap: anywhere;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.login .eventa-admin-login {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: calc(100vh - 150px);
+    min-height: calc(100svh - 150px);
+    margin: 0 auto;
+    padding: 45px 20px;
+    background:
+        radial-gradient(circle at 10% 15%, rgba(104, 91, 199, .10), transparent 30%),
+        radial-gradient(circle at 90% 85%, rgba(153, 137, 232, .12), transparent 30%),
+        var(--eventa-page);
+}
+
+body.login .eventa-admin-login .login-card {
+    width: 100%;
+    max-width: 460px;
+}
+
+body.login .eventa-admin-login .login-campos .mb-3 {
+    margin-bottom: 0 !important;
+}
+
+body.login .eventa-admin-login form {
+    width: 100%;
+}
+
+body.login #footer {
+    margin-left: 0;
+}
+
+@media (max-width: 650px) {
+    body.login #header {
+        min-height: 56px;
+        padding: 10px 16px;
+    }
+
+    body.login .eventa-admin-login {
+        min-height: auto;
+        padding: 35px 14px;
+    }
+}
