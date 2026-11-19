@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+  <div><h1 class="h2 mb-1">Dashboard da produtora</h1><p class="text-secondary mb-0">Resumo dos eventos e indicadores de vendas.</p></div>
+  <a href="{% url 'eventos:gestao_lista' %}" class="btn btn-outline-primary">Gerenciar eventos</a>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-sm-6 col-lg-4"><div class="card card-body h-100"><span class="text-secondary">Eventos</span><strong class="fs-3">{{ total_eventos }}</strong></div></div>
+  <div class="col-sm-6 col-lg-4"><div class="card card-body h-100"><span class="text-secondary">Capacidade total</span><strong class="fs-3">{{ capacidade_total }}</strong></div></div>
+  <div class="col-sm-6 col-lg-4"><div class="card card-body h-100"><span class="text-secondary">Ingressos vendidos</span><strong class="fs-3">{{ ingressos_vendidos }}</strong></div></div>
+  <div class="col-sm-6 col-lg-4"><div class="card card-body h-100"><span class="text-secondary">Ocupação da capacidade</span><strong class="fs-3">{{ ocupacao_percentual }}%</strong></div></div>
+  <div class="col-sm-6 col-lg-4"><div class="card card-body h-100"><span class="text-secondary">Receita</span><strong class="fs-3">R$ {{ receita|floatformat:2 }}</strong></div></div>
+  <div class="col-sm-6 col-lg-4"><div class="card card-body h-100"><span class="text-secondary">Check-ins</span><strong class="fs-3">{{ checkins_feitos }} <span class="fs-6 text-secondary">({{ checkins_percentual }}% dos vendidos)</span></strong></div></div>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-lg-6"><div class="card card-body h-100"><h2 class="h5">Vendas por tipo de ingresso</h2><canvas id="vendasPorTipo" aria-label="Gráfico de vendas por tipo de ingresso"></canvas></div></div>
+  <div class="col-lg-6"><div class="card card-body h-100"><h2 class="h5">Vendas por dia</h2><canvas id="vendasPorDia" aria-label="Gráfico de vendas por dia"></canvas></div></div>
+</div>
+
+<h2 class="h4">Eventos recentes</h2>
+<ul class="list-group">{% for evento in eventos %}<li class="list-group-item d-flex flex-wrap justify-content-between gap-2"><span>{{ evento.nome }}</span><span>{{ evento.get_status_display }} · {{ evento.data|date:"d/m/Y" }}</span></li>{% empty %}<li class="list-group-item">Nenhum evento cadastrado.</li>{% endfor %}</ul>
+
+{{ vendas_tipo_json|json_script:"vendas-tipo-labels" }}
+{{ vendas_tipo_valores_json|json_script:"vendas-tipo-valores" }}
+{{ vendas_dia_json|json_script:"vendas-dia-labels" }}
+{{ vendas_dia_valores_json|json_script:"vendas-dia-valores" }}
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const lerJson = (id) => JSON.parse(document.getElementById(id).textContent);
+  const opcoes = {responsive: true, maintainAspectRatio: true, scales: {y: {beginAtZero: true, ticks: {precision: 0}}}};
+  new Chart(document.getElementById("vendasPorTipo"), {
+    type: "bar",
+    data: {labels: lerJson("vendas-tipo-labels"), datasets: [{label: "Ingressos vendidos", data: lerJson("vendas-tipo-valores")}]},
+    options: opcoes
+  });
+  new Chart(document.getElementById("vendasPorDia"), {
+    type: "line",
+    data: {labels: lerJson("vendas-dia-labels"), datasets: [{label: "Ingressos vendidos", data: lerJson("vendas-dia-valores"), tension: 0.25}]},
+    options: opcoes
+  });
+</script>
+{% endblock %}

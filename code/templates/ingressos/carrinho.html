@@ -1,0 +1,196 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Carrinho{% endblock %}
+
+
+{% block content %}
+
+<div class="eventa-cart">
+
+    <!-- CABEÇALHO -->
+    <header class="cart-header">
+
+        <span class="cart-eyebrow">
+            QUASE LÁ!
+        </span>
+
+        <h1 class="cart-title">
+            Seu carrinho
+        </h1>
+
+        <p class="cart-subtitle">
+            Confira seus ingressos antes de finalizar sua compra.
+        </p>
+
+    </header>
+
+    {% if itens %}
+
+        <div class="cart-layout">
+
+            <!-- LISTA DE ITENS -->
+            <section class="cart-items-card">
+
+                <div class="cart-items-header">
+                    <h2>
+                        Ingressos selecionados
+                        <span class="text-body-secondary fw-normal">
+                            ({{ itens|length }})
+                        </span>
+                    </h2>
+                </div>
+
+                {% for item in itens %}
+
+                    <article class="cart-item">
+
+                        <div class="cart-item-main">
+
+                            <div class="cart-item-icon">
+                                &#127915;
+                            </div>
+
+                            <div class="cart-item-info">
+
+                                <h3 class="cart-item-type">
+                                    {{ item.tipo.nome }}
+                                </h3>
+
+                                <a
+                                    href="{% url 'eventos:detalhe' item.tipo.evento.pk %}"
+                                    class="cart-item-event"
+                                >
+                                    {{ item.tipo.evento.nome }}
+                                </a>
+
+                                <div class="cart-item-date">
+                                    <span aria-hidden="true">&#128197;</span>
+                                    {{ item.tipo.evento.data|date:"d/m/Y" }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="cart-item-values">
+
+                            <span class="cart-item-unit">
+                                Valor unitário:
+                                R$ {{ item.tipo.preco|floatformat:2 }}
+                            </span>
+
+                            <span class="cart-item-quantity">
+                                Quantidade: {{ item.quantidade }}
+                            </span>
+
+                            <strong class="cart-item-subtotal">
+                                R$ {{ item.subtotal|floatformat:2 }}
+                            </strong>
+
+                            <form
+                                method="post"
+                                action="{% url 'ingressos:carrinho_remover' item.tipo.pk %}"
+                            >
+                                {% csrf_token %}
+
+                                <button
+                                    type="submit"
+                                    class="cart-remove"
+                                >
+                                    &#128465; Remover
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </article>
+
+                {% endfor %}
+
+            </section>
+
+            <!-- RESUMO DA COMPRA -->
+            <aside class="cart-summary">
+
+                <h2>Resumo do pedido</h2>
+
+                <div class="cart-summary-line">
+                    <span>Tipos de ingresso</span>
+                    <strong>{{ itens|length }}</strong>
+                </div>
+
+                <hr class="cart-summary-divider">
+
+                <div class="cart-total">
+                    <span>Total da compra</span>
+
+                    <strong>
+                        R$ {{ total|floatformat:2 }}
+                    </strong>
+                </div>
+
+                <form method="post" action="{% url 'ingressos:comprar' %}">
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="cart-checkout-btn"
+                    >
+                        Finalizar compra &rarr;
+                    </button>
+
+                </form>
+
+                <a
+                    href="{% url 'eventos:lista' %}"
+                    class="cart-continue"
+                >
+                    &larr; Continuar comprando
+                </a>
+
+                <div class="cart-security">
+                    <span aria-hidden="true">&#128274;</span>
+
+                    <span>
+                        Confira os dados do seu pedido antes de concluir
+                        a compra.
+                    </span>
+                </div>
+
+            </aside>
+
+        </div>
+
+    {% else %}
+
+        <!-- CARRINHO VAZIO -->
+        <section class="cart-empty">
+
+            <div class="cart-empty-icon">
+                &#128722;
+            </div>
+
+            <h2>Seu carrinho está esperando por você!</h2>
+
+            <p>
+                Você ainda não adicionou nenhum ingresso.
+                Explore os eventos disponíveis e encontre sua próxima experiência.
+            </p>
+
+            <a
+                href="{% url 'eventos:lista' %}"
+                class="btn btn-primary"
+            >
+                Explorar eventos
+            </a>
+
+        </section>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

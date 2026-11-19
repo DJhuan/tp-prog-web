@@ -1,6 +1,124 @@
+
 {% extends "admin/base.html" %}
-{% load static %}
+{% load static i18n %}
+
+{% block responsive %}
+    {{ block.super }}
+
+    <!-- Bootstrap 5 -->
+    <link rel="stylesheet"
+          href="{% static 'vendor/bootstrap/bootstrap.min.css' %}">
+
+    <!-- Estilos principais do EVENTA -->
+    <link rel="stylesheet"
+          href="{% static 'css/admin.css' %}">
+
+    <!-- Ajustes complementares do Admin -->
+    <link rel="stylesheet"
+          href="{% static 'css/admin-custom.css' %}">
+    
+    <!-- Biblioteca de ícones Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+{% endblock %}
+
 {% block extrahead %}
-{{ block.super }}
-<script src="{% static 'js/admin.js' %}"></script>
+    {{ block.super }}
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" defer></script>
+    <script src="{% static 'js/admin.js' %}" defer></script>
+
+{% endblock %}
+
+{% block branding %}
+    <div class="eventa-brand">
+        <a href="{% url 'admin:index' %}">
+            <span class="eventa-brand-icon">E</span>
+            <span>EVENTA</span>
+        </a>
+    </div>
+
+    <div class="eventa-breadcrumb">
+        <span>EVENTA</span>
+        <span class="eventa-breadcrumb-separator">/</span>
+        <span>Administração</span>
+    </div>
+{% endblock %}
+
+{% block usertools %}
+    {% if has_permission %}
+        <div id="user-tools" class="eventa-user-tools">
+            <div class="eventa-user-info">
+                <span class="eventa-user-email">
+                    {{ user.email|default:user.get_username }}
+                </span>
+                <span class="eventa-user-role">
+                    {{ user.get_perfil_display|default:"Administrador" }}
+                </span>
+            </div>
+
+            {% include "admin/color_theme_toggle.html" %}
+
+            <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="eventa-logout">Sair</button>
+            </form>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}
+    {% if has_permission %}
+        <aside class="eventa-sidebar">
+            <div class="eventa-sidebar-brand">
+                <div class="eventa-logo">E</div>
+                <div>
+                    <strong>EVENTA</strong>
+                    <small>Gestão de eventos</small>
+                </div>
+            </div>
+
+            <nav class="eventa-navigation">
+                <span class="eventa-menu-label">MENU PRINCIPAL</span>
+
+                <a href="{% url 'admin:index' %}"
+                   class="eventa-menu-item {% if request.path == '/admin/' %}active{% endif %}">
+                    <i class="fas fa-home eventa-menu-icon"></i>
+                    <span>Visão geral</span>
+                </a>
+
+                {% for app in available_apps %}
+                    <div class="eventa-menu-section">
+                        <span class="eventa-menu-label">{{ app.name }}</span>
+
+                        {% for model in app.models %}
+                            {% if model.admin_url %}
+                                <a href="{{ model.admin_url }}" class="eventa-menu-item">
+                                    <i class="eventa-menu-icon
+                                        {% if model.object_name == 'Usuario' %}fas fa-users
+                                        {% elif model.object_name == 'Produtora' %}fas fa-building
+                                        {% elif model.object_name == 'Evento' %}fas fa-calendar-alt
+                                        {% elif model.object_name == 'TipoIngresso' %}fas fa-ticket-alt
+                                        {% elif model.object_name == 'Pedido' %}fas fa-receipt
+                                        {% elif model.object_name == 'Ingresso' %}fas fa-ticket-alt
+                                        {% else %}fas fa-circle{% endif %}">
+                                    </i>
+                                    <span>{{ model.name }}</span>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </nav>
+
+            <div class="eventa-sidebar-footer">
+                Ambiente administrativo
+            </div>
+        </aside>
+    {% endif %}
 {% endblock %}

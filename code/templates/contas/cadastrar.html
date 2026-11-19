@@ -1,0 +1,89 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Cadastre-se | EVENTA{% endblock %}
+
+{% block content_container_class %}container-fluid p-0{% endblock %}
+
+
+{% block content %}
+<div class="cadastro-page">
+
+  <div class="cadastro-card">
+
+    <!-- Cabeçalho -->
+    <div class="cadastro-cabecalho">
+
+      <div class="cadastro-logo">E</div>
+
+      <span class="cadastro-etiqueta">FAÇA PARTE DO EVENTA</span>
+
+      <h1>Crie sua conta!</h1>
+
+      <p>
+        Cadastre-se para descobrir experiências e garantir seus ingressos.
+      </p>
+
+    </div>
+
+    <!-- Mensagens de erro -->
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger cadastro-alerta">
+        {% for erro in form.non_field_errors %}
+          {{ erro }}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <!-- Formulário -->
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      <div class="row g-3">
+        <div class="col-sm-6">
+          {% include "includes/campo_form.html" with campo=form.first_name %}
+        </div>
+
+        <div class="col-sm-6">
+          {% include "includes/campo_form.html" with campo=form.last_name %}
+        </div>
+      </div>
+
+      <div class="cadastro-campo">
+        {% include "includes/campo_form.html" with campo=form.email %}
+      </div>
+
+      <div class="cadastro-campo">
+        {% include "includes/campo_form.html" with campo=form.password1 %}
+      </div>
+
+      <div class="cadastro-campo">
+        {% include "includes/campo_form.html" with campo=form.password2 %}
+      </div>
+
+      <button type="submit" class="cadastro-botao">
+        Criar minha conta
+        <span>→</span>
+      </button>
+
+    </form>
+
+    <!-- Link para login -->
+    <div class="cadastro-divisor">
+      <span>JÁ TEM UMA CONTA?</span>
+    </div>
+
+    <a href="{% url 'contas:entrar' %}" class="cadastro-login">
+      Entrar na minha conta
+    </a>
+
+  </div>
+
+  <p class="cadastro-rodape">
+    Sua próxima experiência começa aqui. ✦
+  </p>
+
+</div>
+{% endblock %}
+

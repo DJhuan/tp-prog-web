@@ -1,79 +1,280 @@
+
 {% extends "admin/base_site.html" %}
 {% load static %}
+
 {% block breadcrumbs %}{% endblock %}
 {% block content_title %}{% endblock %}
 
 {% block content %}
-<div class="dashboard-heading mb-4">
-    <h1>Visão geral</h1>
-    <p>Bem-vindo ao painel administrativo do EVENTA.</p>
-</div>
 
-<div class="container-fluid p-0">
-    <div class="row mb-4">
+<div class="eventa-dashboard">
 
-        <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card dashboard-card h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between mb-4">
-                        <span>Produtoras</span>
-                        <i class="fas fa-building dashboard-icon"></i>
-                    </div>
-                    <h2>{{ total_produtoras|default:0 }}</h2>
-                    <p>Cadastradas no sistema</p>
-                </div>
-            </div>
+    <!-- CABEÇALHO -->
+    <header class="dash-header">
+        <div>
+            <span class="dash-eyebrow">EVENTA / INTELIGÊNCIA</span>
+            <h1>Desempenho da plataforma</h1>
+            <p>Acompanhe as vendas, os eventos e os resultados da operação.</p>
+        </div>
+        <div class="dash-header-icon">
+            <i class="fas fa-chart-pie"></i>
+        </div>
+    </header>
+
+    <!-- FILTRO DE PERÍODO -->
+    <section class="dash-period">
+        <div>
+            <strong>Visão geral</strong>
+            <span>Selecione o período de análise</span>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card dashboard-card h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between mb-4">
-                        <span>Eventos</span>
-                        <i class="fas fa-calendar-alt dashboard-icon"></i>
-                    </div>
-                    <h2>{{ total_eventos|default:0 }}</h2>
-                    <p>Eventos cadastrados</p>
-                </div>
+        <nav class="dash-period-options">
+            <a href="?periodo=hoje"
+               class="{% if dashboard_periodo == 'hoje' %}active{% endif %}">Hoje</a>
+
+            <a href="?periodo=7d"
+               class="{% if dashboard_periodo == '7d' %}active{% endif %}">7 dias</a>
+
+            <a href="?periodo=30d"
+               class="{% if dashboard_periodo == '30d' %}active{% endif %}">30 dias</a>
+
+            <a href="?periodo=mes"
+               class="{% if dashboard_periodo == 'mes' %}active{% endif %}">Este mês</a>
+
+            <a href="?periodo=todos"
+               class="{% if dashboard_periodo == 'todos' %}active{% endif %}">Todo o período</a>
+        </nav>
+    </section>
+
+    <!-- INDICADORES PRINCIPAIS -->
+    <section class="dash-kpis">
+
+        <article class="dash-kpi">
+            <div class="dash-kpi-top">
+                <span>Faturamento</span>
+                <span class="dash-kpi-icon purple"><i class="fas fa-wallet"></i></span>
             </div>
+            <strong>R$ {{ dashboard_faturamento|floatformat:2 }}</strong>
+            <small>Pedidos aprovados</small>
+        </article>
+
+        <article class="dash-kpi">
+            <div class="dash-kpi-top">
+                <span>Ingressos vendidos</span>
+                <span class="dash-kpi-icon blue"><i class="fas fa-ticket-alt"></i></span>
+            </div>
+            <strong>{{ dashboard_total_ingressos }}</strong>
+            <small>Ingressos de pedidos aprovados</small>
+        </article>
+
+        <article class="dash-kpi">
+            <div class="dash-kpi-top">
+                <span>Eventos realizados</span>
+                <span class="dash-kpi-icon green"><i class="fas fa-calendar-check"></i></span>
+            </div>
+            <strong>{{ dashboard_eventos_realizados }}</strong>
+            <small>Eventos encerrados</small>
+        </article>
+
+        <article class="dash-kpi">
+            <div class="dash-kpi-top">
+                <span>Pedidos aprovados</span>
+                <span class="dash-kpi-icon orange"><i class="fas fa-receipt"></i></span>
+            </div>
+            <strong>{{ dashboard_pedidos_aprovados }}</strong>
+            <small>Compras confirmadas</small>
+        </article>
+
+    </section>
+
+    <!-- GRÁFICO DE VENDAS -->
+    <section class="dash-panel">
+        <div class="dash-panel-heading">
+            <div>
+                <h2>Vendas ao longo do tempo</h2>
+                <p>Quantidade de ingressos vendidos por dia</p>
+            </div>
+            <span class="dash-panel-tag">
+                <i class="fas fa-chart-bar"></i> Desempenho
+            </span>
         </div>
 
-        <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card dashboard-card h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between mb-4">
-                        <span>Ingressos</span>
-                        <i class="fas fa-ticket-alt dashboard-icon"></i>
+        <div class="sales-chart">
+            {% for item in dashboard_grafico_vendas %}
+                <div class="sales-column">
+                    <div class="sales-value">{{ item.quantidade }}</div>
+                    <div class="sales-bar-area">
+                        <div class="sales-bar"
+                             style="height: {{ item.altura }}%;">
+                        </div>
                     </div>
-                    <h2>{{ total_ingressos|default:0 }}</h2>
-                    <p>Ingressos emitidos</p>
+                    <span class="sales-date">{{ item.dia }}</span>
                 </div>
-            </div>
+            {% empty %}
+                <div class="dash-empty">Ainda não existem vendas neste período.</div>
+            {% endfor %}
         </div>
 
-        <div class="col-12 col-md-6 col-xl-3 mb-3">
-            <div class="card dashboard-card h-100">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between mb-4">
+        <div class="chart-legend">
+            <span><i></i> Ingressos vendidos</span>
+        </div>
+    </section>
+
+    <!-- GRÁFICOS DE DISTRIBUIÇÃO -->
+    <section class="dash-charts-grid">
+
+        <!-- PEDIDOS -->
+        <article class="dash-panel">
+            <div class="dash-panel-heading">
+                <div>
+                    <h2>Pedidos por situação</h2>
+                    <p>Distribuição dos pedidos no período</p>
+                </div>
+                <i class="fas fa-shopping-bag dash-heading-icon"></i>
+            </div>
+
+            <div class="donut-content">
+                <div class="donut-chart"
+                     style="background: conic-gradient(
+                        #3978E8 0% {{ dashboard_aprovados_pct }}%,
+                        #F1A94E {{ dashboard_aprovados_pct }}% {{ dashboard_aprovados_pct|add:dashboard_pendentes_pct }}%,
+                        #E56B78 {{ dashboard_aprovados_pct|add:dashboard_pendentes_pct }}% 100%
+                     );">
+                    <div class="donut-hole">
+                        <strong>{{ dashboard_pedidos_aprovados|add:dashboard_pedidos_pendentes|add:dashboard_pedidos_cancelados }}</strong>
                         <span>Pedidos</span>
-                        <i class="fas fa-receipt dashboard-icon"></i>
                     </div>
-                    <h2>{{ total_pedidos|default:0 }}</h2>
-                    <p>Pedidos registrados</p>
                 </div>
+
+                <div class="donut-legend">
+                    <div>
+                        <span class="legend-dot blue-dot"></span>
+                        <span>Aprovados</span>
+                        <strong>{{ dashboard_pedidos_aprovados }}</strong>
+                    </div>
+                    <div>
+                        <span class="legend-dot orange-dot"></span>
+                        <span>Pendentes</span>
+                        <strong>{{ dashboard_pedidos_pendentes }}</strong>
+                    </div>
+                    <div>
+                        <span class="legend-dot red-dot"></span>
+                        <span>Cancelados</span>
+                        <strong>{{ dashboard_pedidos_cancelados }}</strong>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- INGRESSOS -->
+        <article class="dash-panel">
+            <div class="dash-panel-heading">
+                <div>
+                    <h2>Situação dos ingressos</h2>
+                    <p>Ingressos vinculados a pedidos aprovados</p>
+                </div>
+                <i class="fas fa-ticket-alt dash-heading-icon"></i>
+            </div>
+
+            <div class="donut-content">
+                <div class="donut-chart"
+                     style="background: conic-gradient(
+                        #20A779 0% {{ dashboard_utilizados_pct }}%,
+                        #3978E8 {{ dashboard_utilizados_pct }}% 100%
+                     );">
+                    <div class="donut-hole">
+                        <strong>{{ dashboard_total_ingressos }}</strong>
+                        <span>Ingressos</span>
+                    </div>
+                </div>
+
+                <div class="donut-legend">
+                    <div>
+                        <span class="legend-dot green-dot"></span>
+                        <span>Utilizados</span>
+                        <strong>{{ dashboard_ingressos_utilizados }}</strong>
+                    </div>
+                    <div>
+                        <span class="legend-dot blue-dot"></span>
+                        <span>Disponíveis</span>
+                        <strong>{{ dashboard_ingressos_disponiveis }}</strong>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </section>
+
+    <!-- RANKING DE EVENTOS -->
+    <section class="dash-panel dash-ranking">
+        <div class="dash-panel-heading">
+            <div>
+                <h2>Eventos em destaque</h2>
+                <p>Ranking por quantidade de ingressos vendidos</p>
+            </div>
+            <span class="dash-panel-tag">
+                <i class="fas fa-trophy"></i> Top 5
+            </span>
+        </div>
+
+        <div class="ranking-list">
+            {% for evento in dashboard_ranking_eventos %}
+                <div class="ranking-item">
+                    <div class="ranking-position">
+                        {{ forloop.counter|stringformat:"02d" }}
+                    </div>
+
+                    <div class="ranking-info">
+                        <strong>{{ evento.nome }}</strong>
+                        <div class="ranking-track">
+                            <div class="ranking-progress"
+                                 style="width: {{ evento.percentual }}%;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ranking-total">
+                        <strong>{{ evento.total }}</strong>
+                        <small>ingressos</small>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="dash-empty">
+                    Ainda não existem eventos com ingressos vendidos neste período.
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- RESUMO DE EVENTOS -->
+    <section class="dash-bottom-summary">
+        <div>
+            <span class="summary-icon"><i class="fas fa-calendar-check"></i></span>
+            <div>
+                <small>Eventos realizados</small>
+                <strong>{{ dashboard_eventos_realizados }}</strong>
             </div>
         </div>
 
-    </div>
-
-    <div class="card welcome-card border-0">
-        <div class="card-body p-4">
-            <h4>Bem-vindo ao EVENTA!</h4>
-            <p class="mb-0">
-                Gerencie produtoras, eventos, ingressos, pedidos e usuários
-                em um único ambiente.
-            </p>
+        <div>
+            <span class="summary-icon"><i class="fas fa-calendar-day"></i></span>
+            <div>
+                <small>Eventos futuros</small>
+                <strong>{{ dashboard_eventos_futuros }}</strong>
+            </div>
         </div>
-    </div>
+
+        <div>
+            <span class="summary-icon"><i class="fas fa-check-circle"></i></span>
+            <div>
+                <small>Ingressos utilizados</small>
+                <strong>{{ dashboard_ingressos_utilizados }}</strong>
+            </div>
+        </div>
+    </section>
+
 </div>
+
 {% endblock %}
+
+

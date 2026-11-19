@@ -1,0 +1,185 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Meus ingressos{% endblock %}
+
+
+{% block content %}
+
+<div class="eventa-tickets">
+
+    <!-- CABEÇALHO -->
+    <header class="tickets-header">
+
+        <div>
+            <span class="tickets-eyebrow">
+                SUA EXPERIÊNCIA EVENTA
+            </span>
+
+            <h1 class="tickets-title">
+                Meus ingressos
+            </h1>
+
+            <p class="tickets-subtitle">
+                Todos os seus eventos e ingressos em um só lugar.
+            </p>
+        </div>
+
+        <a href="{% url 'eventos:lista' %}" class="btn btn-outline-primary">
+            Explorar eventos
+        </a>
+
+    </header>
+
+    <!-- LISTA DE PEDIDOS -->
+    {% for pedido in pedidos %}
+
+        <section class="ticket-order">
+
+            <!-- CABEÇALHO DO PEDIDO -->
+            <div class="ticket-order-header">
+
+                <div>
+                    <span class="ticket-order-label">
+                        Identificação do pedido
+                    </span>
+
+                    <div class="ticket-order-number">
+                        Pedido #{{ pedido.pk }}
+                    </div>
+                </div>
+
+                <div class="ticket-order-info">
+                    <div>
+                        {{ pedido.data_compra|date:"d/m/Y H:i" }}
+                    </div>
+
+                    <div class="mt-1">
+                        <strong>
+                            R$ {{ pedido.valor_total|floatformat:2 }}
+                        </strong>
+                        <span class="mx-1">·</span>
+                        {{ pedido.get_status_display }}
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- INGRESSOS DO PEDIDO -->
+            {% for ingresso in pedido.ingressos.all %}
+
+                {% with evento=ingresso.tipo_ingresso.evento %}
+
+                    <article class="ticket-item">
+
+                        <div class="ticket-main">
+
+                            <div class="ticket-icon">
+                                &#127915;
+                            </div>
+
+                            <div>
+
+                                <h2 class="ticket-event-name">
+                                    {{ evento.nome }}
+                                </h2>
+
+                                <span class="ticket-type">
+                                    {{ ingresso.tipo_ingresso.nome }}
+                                </span>
+
+                                <div class="ticket-details">
+
+                                    <span class="ticket-detail">
+                                        <span aria-hidden="true">&#128197;</span>
+                                        {{ evento.data|date:"d/m/Y" }}
+                                    </span>
+
+                                    <span class="ticket-detail">
+                                        <span aria-hidden="true">&#128336;</span>
+                                        {{ evento.horario|time:"H:i" }}
+                                    </span>
+
+                                    <span class="ticket-detail">
+                                        <span aria-hidden="true">&#128205;</span>
+                                        {{ evento.local }}
+                                    </span>
+
+                                </div>
+
+                                <div class="ticket-code">
+                                    Código: {{ ingresso.codigo }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- STATUS -->
+                        <div class="ticket-status">
+
+                            {% if ingresso.status == "DISPONIVEL" %}
+
+                                <span class="badge text-bg-success">
+                                    Válido
+                                </span>
+
+                            {% elif ingresso.status == "UTILIZADO" %}
+
+                                <span class="badge text-bg-secondary">
+                                    Utilizado
+                                </span>
+
+                                {% if ingresso.data_validacao %}
+                                    <span class="ticket-validation">
+                                        Validado em
+                                        {{ ingresso.data_validacao|date:"d/m/Y H:i" }}
+                                    </span>
+                                {% endif %}
+
+                            {% else %}
+
+                                <span class="badge text-bg-danger">
+                                    {{ ingresso.get_status_display }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                {% endwith %}
+
+            {% endfor %}
+
+        </section>
+
+    {% empty %}
+
+        <!-- ESTADO SEM INGRESSOS -->
+        <section class="tickets-empty">
+
+            <div class="tickets-empty-icon">
+                &#127915;
+            </div>
+
+            <h2>Seus próximos momentos começam aqui!</h2>
+
+            <p>
+                Você ainda não comprou ingressos.
+                Explore os eventos disponíveis e encontre sua próxima experiência.
+            </p>
+
+            <a href="{% url 'eventos:lista' %}" class="btn btn-primary">
+                Descobrir eventos
+            </a>
+
+        </section>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}
