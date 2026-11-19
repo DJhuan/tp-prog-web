@@ -16,7 +16,7 @@ DESTINO_POR_PERFIL = {
     Usuario.Perfil.ADMINISTRADOR: "admin:index",
     Usuario.Perfil.VENDEDOR: "admin:index",
     Usuario.Perfil.COORDENADOR: "eventos:dashboard",
-    Usuario.Perfil.ORGANIZADOR: "ingressos:portaria",
+    Usuario.Perfil.ORGANIZADOR: "ingressos:eventos_organizador",
     Usuario.Perfil.PARTICIPANTE: "eventos:lista",
 }
 
